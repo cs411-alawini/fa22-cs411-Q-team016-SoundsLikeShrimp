@@ -6,14 +6,14 @@
 | ----------- | ---------------------- |
 | TeamID      |        Team-016        |
 | TeamName    |         Sounds Like Shrimp         |
-| Captain     |       Abdu Alawini     |
-| Captain     |  alawini@illinois.edu  |
+| Captain     |       Frank Yang     |
+| Captain     |  cfyang2@illinois.edu  |
 | Member1     |        Vincent Chen      |
 | Member1     |   vfchen2@illinois.edu  |
-| Member2     |                        |
-| Member2     |                        |
-| Member3     |                        |
-| Member3     |                        |
+| Member2     |           Edwin Kuo             |
+| Member2     |         chkuo2@illinois.edu               |
+| Member3     |           Jimmy Lin         |
+| Member3     |          cmlin2@illinois.edu              |
 
 ## Project Information
 
