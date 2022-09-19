@@ -4,12 +4,12 @@
 
 |   Info      |        Description     |
 | ----------- | ---------------------- |
-| TeamID      |        Team-000        |
-| TeamName    |         sample         |
+| TeamID      |        Team-016        |
+| TeamName    |         Sounds Like Shrimp         |
 | Captain     |       Abdu Alawini     |
 | Captain     |  alawini@illinois.edu  |
-| Member1     |        Kevin Pei       |
-| Member1     |   kevin2@illinois.edu  |
+| Member1     |        Vincent Chen      |
+| Member1     |   vfchen2@illinois.edu  |
 | Member2     |                        |
 | Member2     |                        |
 | Member3     |                        |
