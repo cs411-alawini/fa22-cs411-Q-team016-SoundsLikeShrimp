@@ -1,2 +1,2 @@
 # Docs
-For each stage, please refer to the corresponding file.
+For each stage, please see the corresponding markdown.
