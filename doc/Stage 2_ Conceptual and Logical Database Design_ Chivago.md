@@ -14,12 +14,12 @@ User (email: VARCHAR(255) [PK], name:VARCHAR(255), password:VARCHAR(255), phone:
 > As many mordern user management systems, we set the **email** as the primary key to ensure that every account is unique. Besides the primary key, our User table stores the information that is useful for the real world application.
 
 
-Reservation (reservation_id: INT [PK], user_id: VARCHAR(255) [PK] [FK to User.email], room_num: INT [PK] [FK to Room.room_number], checkin_date: DATE, checkout_date: DATE)
+Reservation (reservation_id: INT [PK], user_id: VARCHAR(255) [PK] [FK to User.email], room_num: INT [PK] [FK to Room.room_number], checkin_year: INT, checkin_month: INT, checkin_date: INT, checkout_year: INT, checkout_month: INT, checkout_date: INT)
 
-> Cardinality: 5
+> Cardinality: 9
 > A reservation is made by a user and the user will be assigned a room if available. Reservation table takes **reservation_id**, **user_id**, and **room_number** as the primary key. With this design, the reservation_id increases slowly because it will increase from 1 for every distinct combination of users and rooms.
 
-Room (room_number: INT [PK], accomodation: INT, price: INT, feature: REAL)
+Room (room_number: INT [PK], accomodation: INT, price: INT, feature: INT)
 > Cardinality: 4
 > Each room acquires a unique **room_number** as the primary key. The **accomodation** column will provide details of the number of persons each room can contain. **Features** of the room will correspond to differnt aspects including suites, luxury rooms, rooms with mountain or ocean views etc. **Prices** will be given according to the aspects illustrated above.
 
@@ -41,7 +41,7 @@ Charter (charter_id: INT [PK], mobile_id: INT [PK] [FK to Mobiles.id], email: VA
 
 Request(time: TIME [PK], room_number: INT [PK] [FK to Room.room_number], service_id: INT [PK] [FK to Service.service_id])
 > Cardinality: 3
-> Each type of request will be identified by the combination of **room_number** and **TIME** that is requested. With these two information we can roughly categorized the service such as house keeping, room service... and each request will be assigned an unique timestamp **time** to avoid conflicts.
+> Each type of request will be identified by the combination of **room_number** and **time** that is requested. With these two information we can roughly categorized the service such as house keeping, room service... and each request will be assigned an unique timestamp **time** to avoid conflicts. At the same time, **time** attribute also stores the information about the request date in addtion to time.
 ### ER Diagram:
 
 

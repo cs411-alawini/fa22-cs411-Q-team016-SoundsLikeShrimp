@@ -1,3 +1,2 @@
 # Docs
-For Stage 1 proposal, please see
-> Stage 1_Project Proposal_ Chivago.md
+For each stage, please refer to the corresponding file.
