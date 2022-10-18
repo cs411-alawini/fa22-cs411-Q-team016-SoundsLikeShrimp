@@ -1,0 +1,5 @@
+USE hotel;
+
+SELECT * FROM User LIMIT 15;
+SELECT * FROM Room LIMIT 15;
+SELECT * FROM Reservation LIMIT 15;
