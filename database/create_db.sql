@@ -21,7 +21,7 @@ CREATE TABLE Room(
 );
 
 CREATE TABLE Reservation(
-    reservation_id  INT PRIMARY KEY,
+    reservation_id  INT,
     email           VARCHAR(255),
     room_number     INT,
     checkin_year    INT,
@@ -32,7 +32,8 @@ CREATE TABLE Reservation(
     checkout_date   INT,
 
     FOREIGN KEY(email) REFERENCES User(email) ON UPDATE CASCADE,
-    FOREIGN KEY(room_number) REFERENCES Room(room_number) ON UPDATE CASCADE
+    FOREIGN KEY(room_number) REFERENCES Room(room_number) ON UPDATE CASCADE,
+    CONSTRAINT PRIMARY KEY(reservation_id, email, room_number)
 );
 
 CREATE TABLE Service(
