@@ -30,6 +30,7 @@ CREATE TABLE Reservation(
     checkout_year   INT,
     checkout_month  INT,
     checkout_date   INT,
+    duration        INT,
 
     FOREIGN KEY(email) REFERENCES User(email) ON UPDATE CASCADE,
     FOREIGN KEY(room_number) REFERENCES Room(room_number) ON UPDATE CASCADE,
