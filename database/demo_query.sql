@@ -1,10 +1,13 @@
 USE hotel;
 
-SELECT * FROM User LIMIT 15;
-SELECT * FROM Room LIMIT 15;
-SELECT * FROM Reservation LIMIT 15;
-SELECT * FROM Service LIMIT 15;
+-- Show
+SELECT COUNT(*) AS instances FROM User;
+SELECT COUNT(*) AS instances FROM Room;
+SELECT COUNT(*) AS instances FROM Reservation;
+SELECT * FROM Service;
 
+
+-- Advanced query
 SELECT rm.feature, COUNT(res.reservation_id) AS popularity
 FROM Reservation res JOIN Room rm USING(room_number)
 -- 180 and 100 can be modified

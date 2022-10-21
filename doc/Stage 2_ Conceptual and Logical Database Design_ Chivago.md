@@ -18,10 +18,10 @@ User (email: VARCHAR(255) [PK], name:VARCHAR(255), password:VARCHAR(255), phone:
 > As many mordern user management systems, we set the **email** as the primary key to ensure that every account is unique. Besides the primary key, our User table stores the information that is useful for the real world application.
 
 
-Reservation (reservation_id: INT [PK], email: VARCHAR(255) [PK] [FK to User.email], room_number: INT [PK] [FK to Room.room_number], checkin_year: INT, checkin_month: INT, checkin_date: INT, checkout_year: INT, checkout_month: INT, checkout_date: INT)
+Reservation (reservation_id: INT [PK], email: VARCHAR(255) [PK] [FK to User.email], room_number: INT [PK] [FK to Room.room_number], checkin_year: INT, checkin_month: INT, checkin_date: INT, checkout_year: INT, checkout_month: INT, checkout_date: INT, duration: INT)
 
 > Description: \
-> A reservation is made by a user and the user will be assigned a room if available. Reservation table takes **reservation_id**, **email**, and **room_number** as the primary key. With this design, the reservation_id increases slowly because it will increase from 1 for every distinct combination of users and rooms.
+> A reservation is made by a user and the user will be assigned a room if available. Reservation table takes **reservation_id**, **email**, and **room_number** as the primary key. With this design, the reservation_id increases slowly because it will increase from 1 for every distinct combination of users and rooms. **duration** records the number of days the customers live.
 
 Room (room_number: INT [PK], accomodation: INT, price: INT, feature: INT)
 > Cardinality:

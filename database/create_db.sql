@@ -8,15 +8,15 @@ USE hotel;
 CREATE TABLE User(
     email       VARCHAR(255) PRIMARY KEY,
     name        VARCHAR(255),
-    password    VARCHAR(255),
+    password    VARCHAR(255) NOT NULL,
     phone       VARCHAR(255),
     membership  INT CHECK(membership <= 5 AND membership >= 1)
 );
 
 CREATE TABLE Room(
     room_number     INT PRIMARY KEY,
-    accomodation    INT,
-    price           INT,
+    accomodation    INT NOT NULL,
+    price           INT NOT NULL,
     feature         INT CHECK(feature <= 10 AND feature >= 1)
 );
 
@@ -39,6 +39,6 @@ CREATE TABLE Reservation(
 
 CREATE TABLE Service(
     service_id  INT PRIMARY KEY,
-    price       INT,
+    price       INT NOT NULL,
     type        INT CHECK(type >= 1)
 )
