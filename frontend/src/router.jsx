@@ -7,6 +7,8 @@ import Admin from "./pages/Admin";
 import Booking from "./pages/Booking";
 import Profile from "./pages/Profile";
 import Reservation from "./pages/Reservation";
+import Revenue from "./pages/Revenue";
+import Feature from "./pages/Feature";
 // import Password from './pages/Password';
 // import ResetPassword from './pages/ResetPassword';
 // import {PasswordResetEmail} from './pages/PasswordResetEmail';
@@ -19,6 +21,8 @@ function CreateRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/check-revenue" element={<Revenue />} />
+          <Route path="/admin/check-feature" element={<Feature />} />
           <Route path="/:email" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/booking" element={<Booking />} />
