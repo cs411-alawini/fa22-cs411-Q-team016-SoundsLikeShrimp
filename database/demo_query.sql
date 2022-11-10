@@ -19,3 +19,6 @@ SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS revenue
 FROM Reservation res JOIN Room rm USING(room_number)
 GROUP BY res.checkin_month
 ORDER BY res.checkin_month;
+
+
+
