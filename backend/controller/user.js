@@ -6,7 +6,7 @@ export const registerUser = (req,res) => {
     const name = user.name;
     const phone = user.phone;
     const membership = user.membership;
-    const addNewUser = "INSERT INTO User (email,name,password,phone,membership) VALUES(?,?,?,?,?)";
+    const addNewUser = "INSERT INTO User (email,name,password,phone,membership) VALUES(?,?,?,?,1)";
     db.query(addNewUser, (err,result) => {
         if(err){
             res.status(400);
@@ -23,8 +23,9 @@ export const homepage = (req,res) => {
     res.send("This is the homepage");
 }
 
+// adminpage show
 export const adminpage = (req,res) => {
-    res.send(usersDB);
+    // res.send(usersDB);
     // const allRegiteredUser = "SLECT * FROM User";
     // res.send(allRegiteredUser);
 }
@@ -36,7 +37,7 @@ export const userInfo = (req,res) => {
         if(!result){
             res.send("User not found");
         }else{
-            res.send(foundUser);
+            res.send(result);
         }
     });
     //test
@@ -51,7 +52,7 @@ export const userInfo = (req,res) => {
 
 export const editUser = (req,res) => {
     const {email} = req.params;
-    const {name,password,phone} = req.body;
+    const {name,phone} = req.body;
     const foundUser = "SELECT * FROM User WHERE User.email = " + email ;
     db.query(foundUser, (err, result) => {
         if(!result){
@@ -66,13 +67,13 @@ export const editUser = (req,res) => {
             res.status(400);
         });
     }
-    if (password){
-        updatePass = "UPDATE User SET User.password = password WHERE User.email = " + email ;
-        db.query(updatPass, (err, result) => {
-            res.send(`password update successfully`);
-            res.status(400);
-        });
-    }
+    // if (password){
+    //     updatePass = "UPDATE User SET User.password = password WHERE User.email = " + email ;
+    //     db.query(updatPass, (err, result) => {
+    //         res.send(`password update successfully`);
+    //         res.status(400);
+    //     });
+    // }
     if (phone){
         updatePhone = "UPDATE User SET User.phone = phone WHERE User.email = " + email ;
         db.query(updatePhone, (err, result) => {
@@ -97,8 +98,8 @@ export const editUser = (req,res) => {
 };
 
 export const login = (require, response) => {
-    const userName = require.body.userName;
-    const passWord = require.body.passWord;  
+    const userName = require.body.email;
+    const passWord = require.body.password;  
     console.log(userName);
 
     if (userName && passWord){
@@ -134,8 +135,9 @@ export const emailReservations = (req, res)=>{
 
 export const deleteReservation = (req, res) => {
     const {email} = req.email;
-    const {reservation_id} = reservation_id;
-    const sqlDelete = "DELETE FROM Reservation WHERE reservation_id = "+ reservation_id;
+    const {reservation_id} = req.reservation_id;
+    const {roomNumber} = req.room_number;
+    const sqlDelete = "DELETE FROM Reservation WHERE reservation_id = "+ reservation_id + "and room_number = "+roomNumber;
     db.query(sqlDelete, (err, result) => {
         if (err) 
         console.log(err);
@@ -150,6 +152,7 @@ export const checkRevenue = (req,res) =>{
 };
 
 export const checkFeature=(req,res) => {
+    // const 
     const feature_query = "SELECT rm.feature, COUNT(res.reservation_id) AS popularity FROM Reservation res JOIN Room rm USING(room_number) WHERE rm.price <= 180 AND rm.price >= 100 GROUP BY rm.feature ORDER BY rm.feature;";
 
     db.query(feature_query,(err,result) => {
@@ -166,11 +169,8 @@ export const bookingCheck = (req,res) => {
     // const cust_checkout_year= //input
     // const cust_checkout_month=
     // const cust_checkout_date=
-    // const people=
-    // const price_low=
-    // const price_high=
-    // contst feature
-    const booking_query = "SELECT room_number,price, feature, accomodation FROM Room ro natural join Reservation re WHERE cust_checkin_year <= re.checkin_year <= cust_checkout_year  and cust_checkin_month <= re.checkin_month <= cust_checkout_month and cust_checkin_date <= re.checkin_date <= cust_checkout_date and people <= ro.accomodation AND price_low <= ro.price <= price_high; ";
+
+    const booking_query = "SELECT room_number,price, feature, accomodation FROM Room ro natural join Reservation re WHERE cust_checkin_year <= re.checkin_year <= cust_checkout_year  and cust_checkin_month <= re.checkin_month <= cust_checkout_month and cust_checkin_date <= re.checkin_date <= cust_checkout_date; ";
 
     db.query(booking_query,(err,result)=> {
         res.send(result);

@@ -1,13 +1,18 @@
-import express  from "express";
+//const express = require("express");
+import express from "express";
 import { registerUser,homepage,adminpage,userInfo,editUser,login,emailReservations,deleteReservation,checkRevenue,checkFeature,bookingCheck,bookARoom } from "../controller/user.js";
+// import mysql from mysql2;
+// const { registerUser,homepage,adminpage,userInfo,editUser,login,emailReservations,deleteReservation,checkRevenue,checkFeature,bookingCheck,bookARoom } = require("../controller/user.js");
 var router = express.Router();
 var mysql = require("mysql2");
+
 
 // create the connection to database
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  database: 'test'
+  password: 'password',
+  database: 'hotel'
 });
 
 /* GET users listing. */
@@ -18,14 +23,14 @@ const usersDB = []
 router.get("/", homepage);
 
 // register (email, password, phone, name)
-router.post("/",registerUser );
+router.post("/register",registerUser );
 
 //admin
 router.get("/admin",adminpage);
 
 // /<email>/info
-router.get("/:email/info",userInfo);
-router.patch("/:email/info",editUser);
+router.get("/:email",userInfo);
+router.patch("/:email",editUser);
 
 // LOGIN Authentication
 app.post("/login", login);
@@ -34,16 +39,16 @@ app.post("/login", login);
 app.get('/:email/reservations',emailReservations);
 
 //<email>/delete
-app.delete("/:email/reservations/:reservation_id",deleteReservation );
+app.delete("/:email/reservations/:reservation_id/:room_number",deleteReservation );
 
 // admin/check-revenue 
 app.get('/admin/check-revenue ',checkRevenue);
 
 // admin/check-feature
-app.get('/admin/check-feature',checkFeature);
+app.post('/admin/check-feature',checkFeature);
 
 // booking
-app.get('/booking',bookingCheck);
+app.post('/booking/getroom',bookingCheck);
 app.post("/booking",bookARoom);
 
 export default router;
