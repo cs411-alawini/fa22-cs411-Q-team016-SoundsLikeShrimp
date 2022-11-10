@@ -1,14 +1,21 @@
 var express = require("express") ;
 // import { registerUser,homepage,adminpage,userInfo,editUser,login,emailReservations,deleteReservation,checkRevenue,checkFeature,bookingCheck,bookARoom } from "../controller/user.js";
 var router = express.Router();
+// const router = express();
+// router.use(cors());
+// router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(express.json());
 var mysql = require("mysql2");
 
 // create the connection to database
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  database: 'test'
+  password: 'password',
+  database: 'hotel'
 });
+
+
 
 /* GET users listing. */
 
@@ -20,8 +27,8 @@ router.get("/", (req,res) => {
 });
 
 // register (email, password, phone, name)
-router.post("/",(req,res) => {
-
+router.post("/register",(req,res) => {
+  console.log(JSON.stringify(req.body));
   const user = req.body;
   const email = user.email;
   const password = user.password;
@@ -182,7 +189,7 @@ router.delete("/:email/reservations/:reservation_id",(req, res) => {
 } );
 
 // admin/check-revenue 
-router.get('/admin/check-revenue ',(req,res) =>{
+router.get('/admin/check-revenue',(req,res) =>{
   const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
   db.query(revenue_query,(err,result) => {
       res.send(result);
@@ -248,6 +255,7 @@ router.post("/booking",(req,res) => {
   });
 });
 
+module.exports = router;
 // router.listen(3000, () => {
 //   console.log("running on port 3000");
 // });
