@@ -1,6 +1,7 @@
 import { List, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
 const data = [
   "Racing car sprays burning fuel into crowd.",
@@ -13,6 +14,7 @@ const data = [
 const Reservation = () => {
   const PROJECT_PATH = "http://localhost:3000";
   const { email } = useParams();
+  const navigate = useNavigate();
 
   const [myRoom, setRoom] = useState([]);
   const getReservation = () => {
@@ -44,37 +46,64 @@ const Reservation = () => {
 
   useEffect(() => {
     getReservation();
-  });
+  }, []);
 
   const delRoom = (resId, room_number) => {
-    fetch(PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number, {
-      method: "DELETE",
-    }).then(() => {
+    fetch(
+      PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number,
+      {
+        method: "DELETE",
+      }
+    ).then(() => {
       getReservation();
     });
   };
 
+  const redirect = (e) => {
+    if (e.key === 'account') {
+			if (email !== undefined) {
+				navigate('/' + email + '/info');
+			} else {
+				navigate('/login');
+			}
+		} else if (e.key === 'home') {
+			if (email !== undefined) {
+				navigate('/' + email);
+			} else {
+				navigate('/');
+			}
+		} else if (e.key === 'reservation') {
+			navigate('/' + email + '/reservations');
+		} else {
+			navigate('/' + e.key);
+		}
+  };
+
   return (
-    <List
-      bordered
-      dataSource={myRoom}
-      renderItem={(item) => (
-        <List.Item
-          actions={[
-            <Button>Modify</Button>,
-            <Button
-              onClick={() => {
-                delRoom(item.reservation_id, item.room_number);
-              }}
-            >
-              Cancel
-            </Button>,
-          ]}
-        >
-          {item.reservation_id}
-        </List.Item>
-      )}
-    />
+    <>
+      <Navbar email={email} clickAction={redirect} />
+
+      <List
+        bordered
+        dataSource={myRoom}
+        renderItem={(item) => (
+          <List.Item
+            actions={[
+              <Button>Modify</Button>,
+              <Button
+                onClick={() => {
+                  delRoom(item.reservation_id, item.room_number);
+                }}
+              >
+                Cancel
+              </Button>,
+            ]}
+          >
+            {item.reservation_id}
+          </List.Item>
+        )}
+      />
+    </>
   );
 };
 

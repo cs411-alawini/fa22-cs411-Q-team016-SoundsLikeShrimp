@@ -1,11 +1,13 @@
 import React, { useEffect , useState } from "react";
 import { Form, Input, Button } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
 
 const Profile = () => {
 	const PROJECT_PATH = "http://localhost:3000";
 	const { email } = useParams();
+	const navigate = useNavigate();
   const [componentDisabled, setComponentDisabled] = useState(true);
   const edit = () => {
     setComponentDisabled((prev) => {
@@ -52,9 +54,30 @@ const Profile = () => {
 		});
 	});
 
+	const redirect = (e) => {
+    if (e.key === 'account') {
+			if (email !== undefined) {
+				navigate('/' + email + '/info');
+			} else {
+				navigate('/login');
+			}
+		} else if (e.key === 'home') {
+			if (email !== undefined) {
+				navigate('/' + email);
+			} else {
+				navigate('/');
+			}
+		} else if (e.key === 'reservation') {
+			navigate('/' + email + '/reservations');
+		} else {
+			navigate('/' + e.key);
+		}
+  };
+
 
   return (
     <>
+			<Navbar email={email} clickAction={redirect} />
       <Button onClick={edit}>Edit</Button>
 
       <Form
