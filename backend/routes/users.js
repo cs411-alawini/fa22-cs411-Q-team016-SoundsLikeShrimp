@@ -248,6 +248,6 @@ router.post("/booking",(req,res) => {
   });
 });
 
-router.listen(3000, () => {
-  console.log("running on port 3000");
-});
+// router.listen(3000, () => {
+//   console.log("running on port 3000");
+// });
