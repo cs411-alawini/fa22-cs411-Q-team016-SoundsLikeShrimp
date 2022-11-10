@@ -46,8 +46,8 @@ const Reservation = () => {
     getReservation();
   });
 
-  const delRoom = (resId) => {
-    fetch(PROJECT_PATH + "/" + email + "/reservations/" + resId, {
+  const delRoom = (resId, room_number) => {
+    fetch(PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number, {
       method: "DELETE",
     }).then(() => {
       getReservation();
@@ -64,7 +64,7 @@ const Reservation = () => {
             <Button>Modify</Button>,
             <Button
               onClick={() => {
-                delRoom(item.reservation_id);
+                delRoom(item.reservation_id, item.room_number);
               }}
             >
               Cancel

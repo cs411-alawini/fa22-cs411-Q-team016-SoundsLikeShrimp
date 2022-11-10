@@ -14,22 +14,23 @@ const Profile = () => {
   };
 
   const [user, setUser] = useState({
-    email: "",
+		email: "",
     name: "",
     phone: "",
   });
 
   const modify = (values) => {
+		console.log(values);
+
 		setUser(prev => {
-			prev.email = values.email;
 			prev.name = values.name;
 			prev.phone = values.phone;
+			return prev;
 		});
 
 		fetch(PROJECT_PATH + '/' + email, {
 			method: "PATCH",
 			body: JSON.stringify({
-				email: values.email,
 				name: values.name,
 				phone: values.phone,
 			}),
@@ -67,14 +68,14 @@ const Profile = () => {
         disabled={componentDisabled}
 				onFinish={modify}
       >
-        <Form.Item label="User Email" name="email">
-          <Input value={user.email} />
+        <Form.Item disabled label="User Email" name="email">
+          <Input defaultValue={user.email} disabled={true} />
         </Form.Item>
         <Form.Item label="User Name" name="name">
-          <Input value={user.name} />
+          <Input defaultValue={user.name} />
         </Form.Item>
         <Form.Item label="Phone Number" name="phone">
-          <Input value={user.phone} />
+          <Input defaultValue={user.phone} />
         </Form.Item>
 
         <Form.Item>

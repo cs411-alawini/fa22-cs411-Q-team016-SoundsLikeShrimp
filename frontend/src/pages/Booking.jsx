@@ -30,8 +30,12 @@ const Booking = () => {
     y.toString() + "/" + padLeadingZeros(m, 2) + "/" + padLeadingZeros(d, 2);
 
   const [stayTime, setStayTime] = useState({
-    start: "",
-    end: "",
+    checkin_date: d,
+    checkin_month: m,
+    checkin_year: y,
+    checkout_date: d,
+    checkout_month: m,
+    checkout_year: y,
   });
 
   // Fetch with current date, render the result
@@ -40,39 +44,47 @@ const Booking = () => {
     let start = values[0].format().substring(0, 10);
     let end = values[1].format().substring(0, 10);
 
+    let checkin_year = parseInt(start.substring(0, 4));
+    let checkin_month = parseInt(start.substring(5, 7));
+    let checkin_date = parseInt(start.substring(8, 10));
+    let checkout_year = parseInt(end.substring(0, 4));
+    let checkout_month = parseInt(end.substring(5, 7));
+    let checkout_date = parseInt(end.substring(8, 10));
+
     setStayTime((prev) => {
-      prev.start = start;
-      prev.end = end;
+      prev.checkin_year = checkin_year;
+      prev.checkin_month = checkin_month;
+      prev.checkin_date = checkin_date;
+      prev.checkout_year = checkout_year;
+      prev.checkout_month = checkout_month;
+      prev.checkout_date = checkout_date;
       return prev;
     });
 
     // Fetch rooms with selected date
     setRoomSelection((prev) => {
       return [];
-    }).then(
-      fetch(PROJECT_PATH + "/booking/getroom", {
-        method: "POST",
-        body: JSON.stringify({
-          start: start,
-          end: end,
-        }),
-      }).then((res) => {
-        res.data.map((room) => {
-          setRoomSelection((prev) => {
-            return [
-              ...prev,
-              {
-                room_number: room.room_number,
-                accommondation: room.accommondation,
-                price: room.price,
-                feature: room.feature,
-              },
-            ];
-          });
-          return room;
+    });
+    console.log(JSON.stringify(stayTime));
+    fetch(PROJECT_PATH + "/booking/getroom", {
+      method: "POST",
+      body: JSON.stringify(stayTime),
+    }).then((res) => {
+      res.data.map((room) => {
+        setRoomSelection((prev) => {
+          return [
+            ...prev,
+            {
+              room_number: room.room_number,
+              accommondation: room.accommondation,
+              price: room.price,
+              feature: room.feature,
+            },
+          ];
         });
-      })
-    );
+        return room;
+      });
+    });
   };
 
   const data = [
@@ -86,12 +98,19 @@ const Booking = () => {
   const [toBook, setRoomNum] = useState(-1);
 
   const book = (values) => {
+		console.log(JSON.stringify({
+			room_number: toBook,
+        ...stayTime,
+        email: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phone: values.phone,
+		}));
     fetch(PROJECT_PATH + "/booking", {
       method: "POST",
       body: JSON.stringify({
         room_number: toBook,
-        checkin_date: stayTime.start,
-        checkout_date: stayTime.end,
+        ...stayTime,
         email: values.email,
         firstName: values.firstName,
         lastName: values.lastName,
@@ -169,4 +188,5 @@ const Booking = () => {
     </>
   );
 };
+
 export default Booking;
