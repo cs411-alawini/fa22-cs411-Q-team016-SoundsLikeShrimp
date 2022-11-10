@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import {
   Form,
@@ -10,6 +10,7 @@ import {
   message,
 } from "antd";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
 const { RangePicker } = DatePicker;
 
 function padLeadingZeros(num, size) {
@@ -17,6 +18,14 @@ function padLeadingZeros(num, size) {
   while (s.length < size) s = "0" + s;
   return s;
 }
+
+const data = [
+  { room_number: "item" },
+  { room_number: 2 },
+  { room_number: 3 },
+  { room_number: 4 },
+  { room_number: 5 },
+];
 
 const Booking = () => {
   const PROJECT_PATH = "http://localhost:3000";
@@ -40,6 +49,10 @@ const Booking = () => {
 
   // Fetch with current date, render the result
   const [rooms, setRoomSelection] = useState([]);
+  useEffect(() => {
+    setRoomSelection((prev) => []);
+  }, [stayTime]);
+
   const showRoom = (values) => {
     let start = values[0].format().substring(0, 10);
     let end = values[1].format().substring(0, 10);
@@ -62,10 +75,6 @@ const Booking = () => {
     });
 
     // Fetch rooms with selected date
-    setRoomSelection((prev) => {
-      return [];
-    });
-    console.log(JSON.stringify(stayTime));
     fetch(PROJECT_PATH + "/booking/getroom", {
       method: "POST",
       body: JSON.stringify(stayTime),
@@ -87,25 +96,9 @@ const Booking = () => {
     });
   };
 
-  const data = [
-    { room_number: "item" },
-    { room_number: 2 },
-    { room_number: 3 },
-    { room_number: 4 },
-    { room_number: 5 },
-  ];
-
   const [toBook, setRoomNum] = useState(-1);
 
   const book = (values) => {
-		console.log(JSON.stringify({
-			room_number: toBook,
-        ...stayTime,
-        email: values.email,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        phone: values.phone,
-		}));
     fetch(PROJECT_PATH + "/booking", {
       method: "POST",
       body: JSON.stringify({
@@ -127,6 +120,7 @@ const Booking = () => {
 
   return (
     <>
+			<Navbar />
       <Form
         labelCol={{
           span: 4,

@@ -1,5 +1,6 @@
 import { Button, Form, InputNumber, List } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Navbar from "./components/Navbar";
 
 const data = [
   "Racing car sprays burning fuel into crowd.",
@@ -37,12 +38,9 @@ const Feature = () => {
 		fetchData(values.minbound, values.maxbound);
 	}
 
-  useEffect(() => {
-    fetchData();
-  });
-
   return (
     <>
+			<Navbar />
 			<Form
 				labelCol={{
           span: 4,

@@ -1,5 +1,6 @@
 import { List } from "antd";
 import React, { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 const data = [
   "Racing car sprays burning fuel into crowd.",
   "Japanese princess to wed commoner.",
@@ -32,6 +33,7 @@ const Revenue = () => {
 	
 	return (
 		<>
+			<Navbar />
 			<List
 				bordered
 				dataSource={revenueData}

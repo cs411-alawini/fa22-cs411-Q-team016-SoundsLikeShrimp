@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
 import { Menu } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 
-// Props: email, isAdmin, clickAction
+// Props: email, isAdmin
 const Navbar = (props) => {
+	const navigate = useNavigate();
+
 	// Navbar items
 	const homeItem = {
 		label: 'Chivage',
@@ -49,6 +52,26 @@ const Navbar = (props) => {
 		props.clickAction(e);
 	};
 
+	const redirect = (e) => {
+    if (e.key === 'account') {
+			if (props.email !== undefined) {
+				navigate('/' + props.email + '/info');
+			} else {
+				navigate('/login');
+			}
+		} else if (e.key === 'home') {
+			if (props.email !== undefined) {
+				navigate('/' + props.email);
+			} else {
+				navigate('/');
+			}
+		} else if (e.key === 'reservation') {
+			navigate('/' + props.email + '/reservations');
+		} else {
+			navigate('/' + e.key);
+		}
+  };
+
 	useEffect(() => {
 		toRender.map(item => {
 			if (item.shouldRender) {
@@ -63,7 +86,7 @@ const Navbar = (props) => {
 	}, []);
 
 	return (
-		<Menu onClick={onClick} mode="horizontal" items={items} />
+		<Menu onClick={redirect} mode="horizontal" items={items} />
 	)
 }
 
