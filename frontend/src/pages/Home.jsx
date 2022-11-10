@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 const Home = () => {
-	const PROJECT_PATH = "http://localhost:3000";
+	const PROJECT_PATH = "http://localhost:5024";
 	const { email } = useParams();
 	const [isAdmin, setAdmin] = useState(false);
 

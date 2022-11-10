@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 
 
 const Profile = () => {
-	const PROJECT_PATH = "http://localhost:3000";
+	const PROJECT_PATH = "http://localhost:5024";
 	const { email } = useParams();
   const [componentDisabled, setComponentDisabled] = useState(true);
   const edit = () => {

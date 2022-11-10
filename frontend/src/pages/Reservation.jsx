@@ -12,7 +12,7 @@ const data = [
 ];
 
 const Reservation = () => {
-  const PROJECT_PATH = "http://localhost:3000";
+  const PROJECT_PATH = "http://localhost:5024";
   const { email } = useParams();
 
   const [myRoom, setRoom] = useState([]);

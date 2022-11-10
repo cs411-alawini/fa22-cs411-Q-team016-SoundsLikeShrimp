@@ -28,7 +28,7 @@ const data = [
 ];
 
 const Booking = () => {
-  const PROJECT_PATH = "http://localhost:3000";
+  const PROJECT_PATH = "http://localhost:5024";
   const navigate = useNavigate();
   const dateFormat = "YYYY/MM/DD";
   let currentDate = new Date();

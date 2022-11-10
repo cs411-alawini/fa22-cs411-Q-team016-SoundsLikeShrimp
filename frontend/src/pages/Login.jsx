@@ -4,7 +4,7 @@ import "antd/dist/antd.min.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const PROJECT_PATH = "http://localhost:3000";
+  const PROJECT_PATH = "http://localhost:5024";
 
   const login = (values) => {
     fetch(PROJECT_PATH + "/login", {

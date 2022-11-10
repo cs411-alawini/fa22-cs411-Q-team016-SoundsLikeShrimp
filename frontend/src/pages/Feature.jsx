@@ -10,7 +10,7 @@ const data = [
   "Los Angeles battles huge wildfires.",
 ];
 const Feature = () => {
-  const PROJECT_PATH = "http://localhost:3000";
+  const PROJECT_PATH = "http://localhost:5024";
   const [featureData, dataRefresh] = useState([]);
   const fetchData = (minPrice, maxPrice) => {
     fetch(PROJECT_PATH + "/admin/check-feature", {

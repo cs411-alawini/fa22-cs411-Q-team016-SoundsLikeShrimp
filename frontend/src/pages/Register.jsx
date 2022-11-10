@@ -2,6 +2,7 @@ import { Button, Form, Input, message } from "antd";
 import React from "react";
 import "antd/dist/antd.min.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 const layout = {
   labelCol: {
@@ -26,29 +27,42 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const Register = () => {
-  const PROJECT_PATH = "http://localhost:3000";
+  const PROJECT_PATH = "http://localhost:5024";
   const navigate = useNavigate();
 
   const register = (values) => {
-    fetch(PROJECT_PATH + "/register", {
-      method: "POST",
-      body: JSON.stringify({
-        'email': values.email,
-        'password': values.password,
-        'name': values.name,
-        'phone': values.phone,
-        'membership': 1,
-      }),
-    }).then((res) => {
+    console.log(values);
+    axios.post(PROJECT_PATH + "/register", {
+      ...values,
+      membership: 1,
+    }).then(res => {
+      console.log(res);
       if (res.status !== 200) {
         message.error("Cannot register this email");
       } else {
-        res.json().then((data) => {
-          // Get email from data and navigate to /<email>
+        res.json().then(data => {
           navigate("/" + data.email);
-        });
+        })
       }
     });
+
+    // fetch(PROJECT_PATH + "/register", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     ...values,
+    //     membership: 1,
+    //   }),
+    // }).then((res) => {
+    //   console.log(res);
+    //   if (res.status !== 200) {
+    //     message.error("Cannot register this email");
+    //   } else {
+    //     res.json().then((data) => {
+    //       // Get email from data and navigate to /<email>
+    //       navigate("/" + data.email);
+    //     });
+    //   }
+    // });
   };
   return (
     <Form

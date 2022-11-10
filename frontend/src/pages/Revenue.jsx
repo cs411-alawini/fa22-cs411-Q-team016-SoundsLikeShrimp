@@ -9,7 +9,7 @@ const data = [
   "Los Angeles battles huge wildfires.",
 ];
 const Revenue = () => {
-	const PROJECT_PATH = "http://localhost:3000";
+	const PROJECT_PATH = "http://localhost:5024";
 	const [revenueData, dataRefresh] = useState([]);
 	const fetchData = () => {
 		fetch(PROJECT_PATH + '/admin/check-revenue', {
