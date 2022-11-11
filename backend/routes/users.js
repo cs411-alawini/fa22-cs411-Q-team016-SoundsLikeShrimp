@@ -218,14 +218,13 @@ router.post('/admin/check-feature',(req,res) => {
 // booking
 router.post('/booking/getroom',(req,res) => {
 
-  const cust_checkin_year= req.body.checkin_year;
-  const cust_checkin_month= req.body.checkin_month;
-  const cust_checkin_date= req.body.checkin_date;
-  const cust_checkout_year= req.body.checkin_year;
-  const cust_checkout_month=req.body.checkin_month;
-  const cust_checkout_date=req.body.checkin_date;
-  const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE"+ cust_checkin_year + "<= re.checkin_year <=" + cust_checkout_year+ "and" + cust_checkin_month + "<= re.checkin_month <= "+cust_checkout_month+ "and" + cust_checkin_date + " <= re.checkin_date <= " +cust_checkout_date+";";
-
+  // const cust_checkin_year= req.body.checkin_year;
+  // const cust_checkin_month= req.body.checkin_month;
+  const checkin_date= req.body.checkin_date;
+  const checkout_date= req.body.checkin_year;
+  // const cust_checkout_month=req.body.checkin_month;
+  // const cust_checkout_date=req.body.checkin_date;
+  const booking_query = "SELECT DIFFERENCE (SELECT (room_number, price, feature, accomodation FROM Room ro natural join Reservation re),SELECT (room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date));";
   db.query(booking_query,(err,result)=> {
       res.json(result);
   });
