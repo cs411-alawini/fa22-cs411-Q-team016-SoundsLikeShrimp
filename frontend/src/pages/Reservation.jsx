@@ -81,7 +81,7 @@ const Reservation = () => {
               </Button>,
             ]}
           >
-            {item.reservation_id}
+            {"Reservation id: " + item.reservation_id + " Room Number: "+ item.room_number}
           </List.Item>
         )}
       />
