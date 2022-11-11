@@ -46,6 +46,8 @@ const Booking = () => {
     checkout_date: d,
     checkout_month: m,
     checkout_year: y,
+    checkin: defaultDate,
+    checkout: defaultDate,
   });
 
   // Fetch with current date, render the result
@@ -54,7 +56,7 @@ const Booking = () => {
     setRoomSelection((prev) => []);
   }, [stayTime]);
 
-  const showRoom = (values) => {
+  async function showRoom(values) {
     let start = values[0].format().substring(0, 10);
     let end = values[1].format().substring(0, 10);
 
@@ -65,30 +67,38 @@ const Booking = () => {
     let checkout_month = parseInt(end.substring(5, 7));
     let checkout_date = parseInt(end.substring(8, 10));
 
-    setStayTime((prev) => {
-      prev.checkin_year = checkin_year;
-      prev.checkin_month = checkin_month;
-      prev.checkin_date = checkin_date;
-      prev.checkout_year = checkout_year;
-      prev.checkout_month = checkout_month;
-      prev.checkout_date = checkout_date;
-      return prev;
-    });
-
-    // Fetch rooms with selected date
-    axios.post(PROJECT_PATH + "/booking/getroom", stayTime).then(res => {
-      res.data.map(room => {
-        setRoomSelection(prev => {
-          return [...prev, {
-            room_number: room.room_number,
-            accommondation: room.accommondation,
-            price: room.price,
-            feature: room.feature,
-          }];
-        });
-        return room;
+    try {
+      await setStayTime((prev) => {
+        prev.checkin_year = checkin_year;
+        prev.checkin_month = checkin_month;
+        prev.checkin_date = checkin_date;
+        prev.checkout_year = checkout_year;
+        prev.checkout_month = checkout_month;
+        prev.checkout_date = checkout_date;
+        prev.checkin = start;
+        prev.checkout = end;
+        return prev;
       });
-    });
+
+      await setRoomSelection(prev => []);
+
+      // Fetch rooms with selected date
+      axios.post(PROJECT_PATH + "/booking/getroom", stayTime).then(res => {
+        res.data.map(room => {
+          setRoomSelection(prev => {
+            return [...prev, {
+              room_number: room.room_number,
+              accommondation: room.accommondation,
+              price: room.price,
+              feature: room.feature,
+            }];
+          });
+          return room;
+        });
+      });
+    } catch(e) {
+      console.log(e);
+    }
   };
 
   const [toBook, setRoomNum] = useState(-1);
@@ -96,7 +106,7 @@ const Booking = () => {
   const book = (values) => {
     console.log(values);
     axios.post(PROJECT_PATH + "/booking", {
-      room_number: 1112,
+      room_number: toBook,
       ...stayTime,
       email: values.email,
       firstName: values.firstName,

@@ -24,6 +24,8 @@ CREATE TABLE Reservation(
     reservation_id  INT,
     email           VARCHAR(255),
     room_number     INT,
+    checkin         DATE,
+    checkout        DATE,
     checkin_year    INT,
     checkin_month   INT,
     checkin_date    INT,

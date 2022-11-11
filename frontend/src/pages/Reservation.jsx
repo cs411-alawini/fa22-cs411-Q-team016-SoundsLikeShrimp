@@ -36,6 +36,8 @@ const Reservation = () => {
               checkout_year: oldReservation.checkout_year,
               checkout_month: oldReservation.checkout_month,
               checkout_date: oldReservation.checkout_date,
+              checkin: oldReservation.checkin,
+              checkout: oldReservation.checkout,
             },
           ];
         });
