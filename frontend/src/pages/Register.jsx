@@ -31,7 +31,6 @@ const Register = () => {
   const navigate = useNavigate();
 
   const register = (values) => {
-    console.log(values);
     axios.post(PROJECT_PATH + "/register", {
       ...values,
       membership: 1,
@@ -45,24 +44,6 @@ const Register = () => {
         })
       }
     });
-
-    // fetch(PROJECT_PATH + "/register", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     ...values,
-    //     membership: 1,
-    //   }),
-    // }).then((res) => {
-    //   console.log(res);
-    //   if (res.status !== 200) {
-    //     message.error("Cannot register this email");
-    //   } else {
-    //     res.json().then((data) => {
-    //       // Get email from data and navigate to /<email>
-    //       navigate("/" + data.email);
-    //     });
-    //   }
-    // });
   };
   return (
     <Form

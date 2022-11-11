@@ -2,27 +2,41 @@ import { Button, Form, Input, message } from "antd";
 import React from "react";
 import "antd/dist/antd.min.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const PROJECT_PATH = "http://localhost:5024";
 
   const login = (values) => {
-    fetch(PROJECT_PATH + "/login", {
-      method: "POST",
-      body: JSON.stringify({
-        'email': values.email,
-        'password': values.password,
-      }),
-    }).then((res) => {
+    axios.post(PROJECT_PATH + "/login", {
+      email: values.email,
+      password: values.password,
+    }).then(res => {
       if (res.status !== 200) {
         message.error("Login failed");
       } else {
-        res.json().then((data) => {
-          // Get email from data and navigate to /<email>
+        res.json().then(data => {
           navigate("/" + data.email);
-        });
+        })
       }
     });
+
+    // fetch(PROJECT_PATH + "/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     'email': values.email,
+    //     'password': values.password,
+    //   }),
+    // }).then((res) => {
+    //   if (res.status !== 200) {
+    //     message.error("Login failed");
+    //   } else {
+    //     res.json().then((data) => {
+    //       // Get email from data and navigate to /<email>
+    //       navigate("/" + data.email);
+    //     });
+    //   }
+    // });
   };
 
   const navigate = useNavigate();

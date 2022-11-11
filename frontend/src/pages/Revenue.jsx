@@ -1,6 +1,7 @@
 import { List } from "antd";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import axios from "axios";
 const data = [
   "Racing car sprays burning fuel into crowd.",
   "Japanese princess to wed commoner.",
@@ -12,9 +13,7 @@ const Revenue = () => {
 	const PROJECT_PATH = "http://localhost:5024";
 	const [revenueData, dataRefresh] = useState([]);
 	const fetchData = () => {
-		fetch(PROJECT_PATH + '/admin/check-revenue', {
-			method: "GET",
-		}).then(res => {
+		axios.get(PROJECT_PATH + "/admin/check-revenue").then(res => {
 			res.data.map(detail => {
 				dataRefresh(prev => {
 					return [...prev, {
@@ -23,13 +22,27 @@ const Revenue = () => {
 					}];
 				});
 				return detail;
-			})
-		})
+			});
+		});
+
+		// fetch(PROJECT_PATH + '/admin/check-revenue', {
+		// 	method: "GET",
+		// }).then(res => {
+		// 	res.data.map(detail => {
+		// 		dataRefresh(prev => {
+		// 			return [...prev, {
+		// 				month: detail.month,
+		// 				revenue: detail.revenue,
+		// 			}];
+		// 		});
+		// 		return detail;
+		// 	})
+		// })
 	};
 
 	useEffect(() => {
 		fetchData();
-	});
+	}, []);
 	
 	return (
 		<>

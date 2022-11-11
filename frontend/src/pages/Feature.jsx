@@ -1,6 +1,7 @@
 import { Button, Form, InputNumber, List } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import axios from "axios";
 
 const data = [
   "Racing car sprays burning fuel into crowd.",
@@ -12,31 +13,60 @@ const data = [
 const Feature = () => {
   const PROJECT_PATH = "http://localhost:5024";
   const [featureData, dataRefresh] = useState([]);
+	const [range, setRange] = useState({
+		minPrice: 0,
+		maxPrice: 0,
+	})
   const fetchData = (minPrice, maxPrice) => {
-    fetch(PROJECT_PATH + "/admin/check-feature", {
-      method: "POST",
-			body: JSON.stringify({
-				minPrice: minPrice,
-				maxPrice: maxPrice,
-			})
-    }).then((res) => {
-      res.data.map((detail) => {
-        dataRefresh((prev) => {
-          return [
-            ...prev,
-            {
-              feature: detail.feature,
-              popularity: detail.popularity,
-            },
-          ];
-        });
-        return detail;
-      });
-    });
+		setRange(prev => {
+			prev.minPrice = minPrice;
+			prev.maxPrice = maxPrice;
+			return prev;
+		});
+
+		axios.post(PROJECT_PATH + "/admin/check-feature", {
+			minPrice: minPrice,
+			maxPrice: maxPrice,
+		}).then(res => {
+			res.data.map(detail => {
+				dataRefresh(prev => {
+					return [...prev, {
+						feature: detail.feature,
+						popularity: detail.popularity,
+					}];
+				});
+				return detail;
+			});
+		});
+
+    // fetch(PROJECT_PATH + "/admin/check-feature", {
+    //   method: "POST",
+		// 	body: JSON.stringify({
+		// 		minPrice: minPrice,
+		// 		maxPrice: maxPrice,
+		// 	})
+    // }).then((res) => {
+    //   res.data.map((detail) => {
+    //     dataRefresh((prev) => {
+    //       return [
+    //         ...prev,
+    //         {
+    //           feature: detail.feature,
+    //           popularity: detail.popularity,
+    //         },
+    //       ];
+    //     });
+    //     return detail;
+    //   });
+    // });
   };
 	const showFeature = (values) => {
 		fetchData(values.minbound, values.maxbound);
 	}
+
+	useEffect(() => {
+		dataRefresh([]);
+	}, [range]);
 
   return (
     <>

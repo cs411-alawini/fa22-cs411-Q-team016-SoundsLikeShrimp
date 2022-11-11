@@ -48,10 +48,6 @@ const Navbar = (props) => {
 		},
 	];
 
-	const onClick = (e) => {
-		props.clickAction(e);
-	};
-
 	const redirect = (e) => {
     if (e.key === 'account') {
 			if (props.email !== undefined) {

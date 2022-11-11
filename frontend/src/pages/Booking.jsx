@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import axios from "axios";
 const { RangePicker } = DatePicker;
 
 function padLeadingZeros(num, size) {
@@ -75,47 +76,76 @@ const Booking = () => {
     });
 
     // Fetch rooms with selected date
-    fetch(PROJECT_PATH + "/booking/getroom", {
-      method: "POST",
-      body: JSON.stringify(stayTime),
-    }).then((res) => {
-      res.data.map((room) => {
-        setRoomSelection((prev) => {
-          return [
-            ...prev,
-            {
-              room_number: room.room_number,
-              accommondation: room.accommondation,
-              price: room.price,
-              feature: room.feature,
-            },
-          ];
+    axios.post(PROJECT_PATH + "/booking/getroom", stayTime).then(res => {
+      res.data.map(room => {
+        setRoomSelection(prev => {
+          return [...prev, {
+            room_number: room.room_number,
+            accommondation: room.accommondation,
+            price: room.price,
+            feature: room.feature,
+          }];
         });
         return room;
       });
     });
+
+    // fetch(PROJECT_PATH + "/booking/getroom", {
+    //   method: "POST",
+    //   body: JSON.stringify(stayTime),
+    // }).then((res) => {
+    //   res.data.map((room) => {
+    //     setRoomSelection((prev) => {
+    //       return [
+    //         ...prev,
+    //         {
+    //           room_number: room.room_number,
+    //           accommondation: room.accommondation,
+    //           price: room.price,
+    //           feature: room.feature,
+    //         },
+    //       ];
+    //     });
+    //     return room;
+    //   });
+    // });
   };
 
   const [toBook, setRoomNum] = useState(-1);
 
   const book = (values) => {
-    fetch(PROJECT_PATH + "/booking", {
-      method: "POST",
-      body: JSON.stringify({
-        room_number: toBook,
-        ...stayTime,
-        email: values.email,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        phone: values.phone,
-      }),
-    }).then((res) => {
+    axios.post(PROJECT_PATH, "/booking", {
+      room_number: toBook,
+      ...stayTime,
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.firstName,
+      phone: values.phone,
+    }).then(res => {
       if (res.status !== 200) {
         message.error("Room not availible");
       } else {
         navigate("/" + values.email);
       }
-    });
+    })
+
+    // fetch(PROJECT_PATH + "/booking", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     room_number: toBook,
+    //     ...stayTime,
+    //     email: values.email,
+    //     firstName: values.firstName,
+    //     lastName: values.lastName,
+    //     phone: values.phone,
+    //   }),
+    // }).then((res) => {
+    //   if (res.status !== 200) {
+    //     message.error("Room not availible");
+    //   } else {
+    //     navigate("/" + values.email);
+    //   }
+    // });
   };
 
   return (

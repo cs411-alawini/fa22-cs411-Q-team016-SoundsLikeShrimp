@@ -2,6 +2,7 @@ import React, { useEffect , useState } from "react";
 import { Form, Input, Button } from "antd";
 import { useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import axios from "axios";
 
 
 const Profile = () => {
@@ -29,28 +30,44 @@ const Profile = () => {
 			return prev;
 		});
 
-		fetch(PROJECT_PATH + '/' + email, {
-			method: "PATCH",
-			body: JSON.stringify({
-				name: values.name,
-				phone: values.phone,
-			}),
-		});
+    axios.patch(PROJECT_PATH + "/" + email, {
+      name: values.name,
+      phone:values.phone,
+    });
+
+		// fetch(PROJECT_PATH + '/' + email, {
+		// 	method: "PATCH",
+		// 	body: JSON.stringify({
+		// 		name: values.name,
+		// 		phone: values.phone,
+		// 	}),
+		// });
 	}
 
 	useEffect(() => {
-		fetch(PROJECT_PATH + "/" + email, {
-			method: "GET",
-		}).then(res => {
-			res.json().then(data => {
-				setUser(prev => {
-					prev.email = data.email;
-					prev.name = data.name;
-					prev.phone = data.phone;
-					return prev;
-				});
-			});
-		});
+    axios.get(PROJECT_PATH + "/" + email).then(res => {
+      res.json().then(data => {
+        setUser(prev => {
+          prev.email = data.email;
+          prev.name = data.name;
+          prev.phone = data.phone;
+          return prev;
+        });
+      })
+    });
+
+		// fetch(PROJECT_PATH + "/" + email, {
+		// 	method: "GET",
+		// }).then(res => {
+		// 	res.json().then(data => {
+		// 		setUser(prev => {
+		// 			prev.email = data.email;
+		// 			prev.name = data.name;
+		// 			prev.phone = data.phone;
+		// 			return prev;
+		// 		});
+		// 	});
+		// });
 	});
 
   return (
