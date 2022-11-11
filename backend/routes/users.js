@@ -255,7 +255,7 @@ router.post("/booking",(req,res) => {
 
   const duration = days(checkout, checkin);
   console.log(duration);
-  const reservationInsert = "INSERT INTO Reservation (reservation_id,room_number,email,checkin_year,checkin_month,checkin_date,checkout_year,checkout_month,checkout_date,duration) VALUES(?,?,?,?,?,?,?,?,?,?);"
+  const reservationInsert = "INSERT INTO Reservation (reservation_id,room_number, email, checkin, checkout,checkin_year,checkin_month,checkin_date,checkout_year,checkout_month,checkout_date,duration) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);"
   const getMaxReservaton = "SELECT MAX(reservation_id) as id FROM Reservation;";
   db.query(getMaxReservaton, (err, result) => {
     if (err) {
@@ -263,7 +263,7 @@ router.post("/booking",(req,res) => {
       return ;
     }else{
       const reservationID = result[0].id + 1;
-      db.query(reservationInsert,[reservationID,selected_room_number,cust_email,cust_checkin_year,cust_checkin_month,cust_checkin_date,cust_checkout_year,cust_checkout_month,cust_checkout_date,duration],(err,result) => { 
+      db.query(reservationInsert,[reservationID,selected_room_number,cust_email,checkin, checkout, cust_checkin_year,cust_checkin_month,cust_checkin_date,cust_checkout_year,cust_checkout_month,cust_checkout_date,duration],(err,result) => { 
         if (err){
             res.status(400).json();
             console.log(err);
