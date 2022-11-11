@@ -18,7 +18,9 @@ const Reservation = () => {
 
   const [myRoom, setRoom] = useState([]);
   const getReservation = () => {
-    axios.get(PROJECT_PATH + "/" + email + "/reservations").then((res) => {
+    console.log("Start get reservation");
+    axios.get(PROJECT_PATH + "/" + email + "/reservations").then(res => {
+      console.log(res);
       res.data.map((oldReservation) => {
         setRoom((prev) => {
           return [
@@ -39,47 +41,21 @@ const Reservation = () => {
         });
         return oldReservation;
       });
+    }).catch(err => {
+      console.log(err);
     });
-
-    // fetch(PROJECT_PATH + "/" + email + "/reservations", {
-    //   method: "GET",
-    // }).then((res) => {
-    //   res.data.map((oldReservation) => {
-    //     setRoom((prev) => {
-    //       return [
-    //         ...prev,
-    //         {
-    //           reservation_id: oldReservation.reservation_id,
-    //           room_number: oldReservation.room_number,
-    //           email: oldReservation.email,
-    //           duration: oldReservation.duration,
-    //           checkin_year: oldReservation.checkin_year,
-    //           checkin_month: oldReservation.checkin_month,
-    //           checkin_date: oldReservation.checkin_date,
-    //           checkout_year: oldReservation.checkout_year,
-    //           checkout_month: oldReservation.checkout_month,
-    //           checkout_date: oldReservation.checkout_date,
-    //         },
-    //       ];
-    //     });
-    //     return oldReservation;
-    //   });
-    // });
   };
 
-  const delRoom = (resId, room_number) => {
-    axios.delete(PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number).then(() => {
-      getReservation();
-    });
+  useEffect(() => {
+    getReservation();
+  }, []);
 
-    // fetch(
-    //   PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number,
-    //   {
-    //     method: "DELETE",
-    //   }
-    // ).then(() => {
-    //   getReservation();
-    // });
+  const delRoom = (resId, room_number) => {
+    axios.delete(PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number).then(res => {
+      getReservation();
+    }).catch(err => {
+      console.log(err);
+    });
   };
 
   return (

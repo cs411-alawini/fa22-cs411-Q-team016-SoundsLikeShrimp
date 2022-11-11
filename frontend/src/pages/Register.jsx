@@ -35,14 +35,12 @@ const Register = () => {
       ...values,
       membership: 1,
     }).then(res => {
-      console.log(res);
-      if (res.status !== 200) {
-        message.error("Cannot register this email");
-      } else {
-        res.json().then(data => {
-          navigate("/" + data.email);
-        })
-      }
+      message.success("Registration success!");
+      navigate("/" + res.data.email);
+    }).catch((err) => {
+      message.error("Cannot register this email");
+      console.log(err);
+      // console.log(res);
     });
   };
   return (

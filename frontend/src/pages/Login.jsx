@@ -12,31 +12,12 @@ const Login = () => {
       email: values.email,
       password: values.password,
     }).then(res => {
-      if (res.status !== 200) {
-        message.error("Login failed");
-      } else {
-        res.json().then(data => {
-          navigate("/" + data.email);
-        })
-      }
+      message.success("Login success!");
+      navigate("/" + res.data[0].email);
+      
+    }).catch(err => {
+      message.error("Login failed")
     });
-
-    // fetch(PROJECT_PATH + "/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     'email': values.email,
-    //     'password': values.password,
-    //   }),
-    // }).then((res) => {
-    //   if (res.status !== 200) {
-    //     message.error("Login failed");
-    //   } else {
-    //     res.json().then((data) => {
-    //       // Get email from data and navigate to /<email>
-    //       navigate("/" + data.email);
-    //     });
-    //   }
-    // });
   };
 
   const navigate = useNavigate();

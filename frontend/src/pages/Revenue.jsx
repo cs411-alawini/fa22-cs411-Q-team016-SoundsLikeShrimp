@@ -24,20 +24,6 @@ const Revenue = () => {
 				return detail;
 			});
 		});
-
-		// fetch(PROJECT_PATH + '/admin/check-revenue', {
-		// 	method: "GET",
-		// }).then(res => {
-		// 	res.data.map(detail => {
-		// 		dataRefresh(prev => {
-		// 			return [...prev, {
-		// 				month: detail.month,
-		// 				revenue: detail.revenue,
-		// 			}];
-		// 		});
-		// 		return detail;
-		// 	})
-		// })
 	};
 
 	useEffect(() => {
@@ -52,7 +38,7 @@ const Revenue = () => {
 				dataSource={revenueData}
 				renderItem={(item) => (
 					<List.Item>
-						{item}
+						{"month: " + item.month + ", revenue: " + item.revenue}
 					</List.Item>
 				)}
 			/>

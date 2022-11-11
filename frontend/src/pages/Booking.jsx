@@ -89,63 +89,27 @@ const Booking = () => {
         return room;
       });
     });
-
-    // fetch(PROJECT_PATH + "/booking/getroom", {
-    //   method: "POST",
-    //   body: JSON.stringify(stayTime),
-    // }).then((res) => {
-    //   res.data.map((room) => {
-    //     setRoomSelection((prev) => {
-    //       return [
-    //         ...prev,
-    //         {
-    //           room_number: room.room_number,
-    //           accommondation: room.accommondation,
-    //           price: room.price,
-    //           feature: room.feature,
-    //         },
-    //       ];
-    //     });
-    //     return room;
-    //   });
-    // });
   };
 
   const [toBook, setRoomNum] = useState(-1);
 
   const book = (values) => {
-    axios.post(PROJECT_PATH, "/booking", {
-      room_number: toBook,
+    console.log(values);
+    axios.post(PROJECT_PATH + "/booking", {
+      room_number: 1112,
       ...stayTime,
       email: values.email,
       firstName: values.firstName,
       lastName: values.firstName,
       phone: values.phone,
     }).then(res => {
-      if (res.status !== 200) {
-        message.error("Room not availible");
-      } else {
-        navigate("/" + values.email);
-      }
+      message.success("Booking success")
+      navigate("/" + values.email);
+      
+    }).catch(err => {
+      message.error("Room not availible")
     })
 
-    // fetch(PROJECT_PATH + "/booking", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     room_number: toBook,
-    //     ...stayTime,
-    //     email: values.email,
-    //     firstName: values.firstName,
-    //     lastName: values.lastName,
-    //     phone: values.phone,
-    //   }),
-    // }).then((res) => {
-    //   if (res.status !== 200) {
-    //     message.error("Room not availible");
-    //   } else {
-    //     navigate("/" + values.email);
-    //   }
-    // });
   };
 
   return (

@@ -10,7 +10,7 @@ const Navbar = (props) => {
 
 	// Navbar items
 	const homeItem = {
-		label: 'Chivage',
+		label: 'Chivago',
 		key: 'home',
 	}
 	const loginItem = (props.email !== undefined) ? {

@@ -25,6 +25,7 @@ const Profile = () => {
 		console.log(values);
 
 		setUser(prev => {
+      prev.email = email;
 			prev.name = values.name;
 			prev.phone = values.phone;
 			return prev;
@@ -46,29 +47,15 @@ const Profile = () => {
 
 	useEffect(() => {
     axios.get(PROJECT_PATH + "/" + email).then(res => {
-      res.json().then(data => {
-        setUser(prev => {
-          prev.email = data.email;
-          prev.name = data.name;
-          prev.phone = data.phone;
-          return prev;
-        });
-      })
+      setUser(prev => {
+        prev.email = res.data.email;
+        prev.name = res.data.name;
+        prev.phone = res.data.phone;
+        return prev;
+      });
     });
 
-		// fetch(PROJECT_PATH + "/" + email, {
-		// 	method: "GET",
-		// }).then(res => {
-		// 	res.json().then(data => {
-		// 		setUser(prev => {
-		// 			prev.email = data.email;
-		// 			prev.name = data.name;
-		// 			prev.phone = data.phone;
-		// 			return prev;
-		// 		});
-		// 	});
-		// });
-	});
+	}, []);
 
   return (
     <>

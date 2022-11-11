@@ -17,48 +17,33 @@ const Feature = () => {
 		minPrice: 0,
 		maxPrice: 0,
 	})
-  const fetchData = (minPrice, maxPrice) => {
-		setRange(prev => {
-			prev.minPrice = minPrice;
-			prev.maxPrice = maxPrice;
-			return prev;
-		});
-
-		axios.post(PROJECT_PATH + "/admin/check-feature", {
-			minPrice: minPrice,
-			maxPrice: maxPrice,
-		}).then(res => {
-			res.data.map(detail => {
-				dataRefresh(prev => {
-					return [...prev, {
-						feature: detail.feature,
-						popularity: detail.popularity,
-					}];
-				});
-				return detail;
+  async function fetchData(minPrice, maxPrice) {
+		try {
+			await setRange(prev => {
+				prev.minPrice = minPrice;
+				prev.maxPrice = maxPrice;
+				return prev;
 			});
-		});
+			await dataRefresh(prev => {return []});
 
-    // fetch(PROJECT_PATH + "/admin/check-feature", {
-    //   method: "POST",
-		// 	body: JSON.stringify({
-		// 		minPrice: minPrice,
-		// 		maxPrice: maxPrice,
-		// 	})
-    // }).then((res) => {
-    //   res.data.map((detail) => {
-    //     dataRefresh((prev) => {
-    //       return [
-    //         ...prev,
-    //         {
-    //           feature: detail.feature,
-    //           popularity: detail.popularity,
-    //         },
-    //       ];
-    //     });
-    //     return detail;
-    //   });
-    // });
+			axios.post(PROJECT_PATH + "/admin/check-feature", {
+				minPrice: minPrice,
+				maxPrice: maxPrice,
+			}).then(res => {
+				res.data.map(detail => {
+					dataRefresh(prev => {
+						return [...prev, {
+							feature: detail.feature,
+							popularity: detail.popularity,
+						}];
+					});
+					return detail;
+				});
+			});
+		} catch(error) {
+			console.log(error);
+		}
+
   };
 	const showFeature = (values) => {
 		fetchData(values.minbound, values.maxbound);
@@ -97,7 +82,7 @@ const Feature = () => {
       <List
         bordered
         dataSource={featureData}
-        renderItem={(item) => <List.Item>{item}</List.Item>}
+        renderItem={(item) => <List.Item>{"Feature: " + item.feature + ", Popularity: " + item.popularity}</List.Item>}
       />
     </>
   );

@@ -20,5 +20,8 @@ FROM Reservation res JOIN Room rm USING(room_number)
 GROUP BY res.checkin_month
 ORDER BY res.checkin_month;
 
+SELECT * FROM Reservation WHERE email = "test1234@example.com";
+
+
 
 
