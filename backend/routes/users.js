@@ -226,7 +226,7 @@ router.post('/booking/getroom',(req,res) => {
   // const cust_checkout_date=req.body.checkin_date;
   // const booking_query = "(SELECT (room_number, price, feature, accomodation FROM Room ro natural join Reservation re) MINUS (SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date));";
   //const booking_query = "(SELECT (room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE room_number not in (SELECT room_number FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date));)) MINUS";
-  const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re EXCEPT SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date;";
+  const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re EXCEPT SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date OR " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date;";
   db.query(booking_query,(err,result)=> {
       console.log(err)
       res.json(result);
