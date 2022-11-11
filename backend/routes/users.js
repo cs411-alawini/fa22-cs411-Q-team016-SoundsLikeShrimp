@@ -1,10 +1,6 @@
 var express = require("express") ;
 // import { registerUser,homepage,adminpage,userInfo,editUser,login,emailReservations,deleteReservation,checkRevenue,checkFeature,bookingCheck,bookARoom } from "../controller/user.js";
 var router = express.Router();
-// const router = express();
-// router.use(cors());
-// router.use(bodyParser.urlencoded({ extended: true }));
-// router.use(express.json());
 var mysql = require("mysql2");
 
 // create the connection to database
@@ -28,7 +24,6 @@ router.get("/", (req,res) => {
 
 // register (email, password, phone, name)
 router.post("/register",(req,res) => {
-  console.log(JSON.stringify(req.body));
   const user = req.body;
   const email = user.email;
   const password = user.password;
@@ -36,12 +31,15 @@ router.post("/register",(req,res) => {
   const phone = user.phone;
   const membership = user.membership;
   const addNewUser = "INSERT INTO User (email,name,password,phone,membership) VALUES(?,?,?,?,1)";
-  db.query(addNewUser, (err,result) => {
+  db.query(addNewUser,[email,name,password,phone,membership],(err,result) => {
       if(err){
-          res.status(400);
+          // res.status(400);
+          // res.sendStatus(400);
+          res.status(400).json();
       }else{
-          res.status(200);
+          res.status(200).json(user);
       }
+      // console.log(res.statusCode);
   });
   // test
   // usersDB.push(user);
@@ -56,32 +54,38 @@ router.get("/admin",(req,res) => {
 });
 
 // /<email>/info
-router.get("/:email/info",(req,res) => {
+router.get("/:email",(req,res) => {
   const {email} = req.params;
-  const foundUser = "SELECT * FROM User WHERE User.email = " + email ;
+  const foundUser = "SELECT * FROM User WHERE User.email = \"" + email + "\";";
   db.query(foundUser, (err, result) => {
       if(!result){
           res.send("User not found");
       }else{
-          res.send(foundUser);
+          res.send(result);
       }
   });
 });
-router.patch("/:email/info",(req,res) => {
+router.patch("/:email",(req,res) => {
   const {email} = req.params;
   const {name,password,phone} = req.body;
-  const foundUser = "SELECT * FROM User WHERE User.email = " + email ;
+  const foundUser = "SELECT * FROM User WHERE User.email = \"" + email + "\";";
   db.query(foundUser, (err, result) => {
       if(!result){
-          res.send("User not found");
-          res.end();
+        console.log("User not found");
+          // res.send("User not found");
+          // res.end();
       }
   });
   if (name){
-      updateName = "UPDATE User SET User.name = name WHERE User.email = " + email ;
+      updateName = "UPDATE User SET User.name = name WHERE User.email = \"" + email + "\";";
       db.query(updateName, (err, result) => {
-          res.send(`name update successfully`);
-          res.status(400);
+          // res.send(`name update successfully`);
+          // res.status(200).json();
+          if (err) {
+            res.status(400).json();
+            return;
+          }
+
       });
   }
   // if (password){
@@ -92,12 +96,17 @@ router.patch("/:email/info",(req,res) => {
   //     });
   // }
   if (phone){
-      updatePhone = "UPDATE User SET User.phone = phone WHERE User.email = " + email ;
+      updatePhone = "UPDATE User SET User.phone = phone WHERE User.email = \"" + email + "\";";
       db.query(updatePhone, (err, result) => {
-          res.send(`phone update successfully`);
-          res.status(400);
+          // res.send(`phone update successfully`);
+          if (err) {
+            res.status(400).json();
+            return;
+          }
       });
   }
+
+  res.status(200).json();
   // test
   // const updateTheUser = usersDB.find((user) => user.email == email);
   // if (name) {
@@ -116,30 +125,27 @@ router.patch("/:email/info",(req,res) => {
 
 // LOGIN Authentication
 router.post("/login", (require, response) => {
-  const userName = require.body.userName;
-  const passWord = require.body.passWord;  
-  console.log(userName);
+  const userName = require.body.email;
+  const passWord = require.body.password;  
+  // console.log(require);
 
   if (userName && passWord){
-      const getPass = "SELECT * FROM User WHERE User.email = "+userName +"AND User.password" + passWord;
+      const getPass = "SELECT * FROM User WHERE User.email = \""+userName +"\" AND User.password = \"" + passWord + "\";";
       db.query(getPass, (err,result) => {
           if (result.length > 0) {
               // request.session.loggedin = true;
               // request.session.user_name = username;
-              response.status(200);
+              // console.log(result);
+              response.status(200).json(result);
               //response.redirect('/'+userName);
           }
           else{
-              response.send('Incorrect Username and/or Password!');
-              response.status(400);
+              response.status(400).json('Incorrect Username and/or Password!');
           }
-          response.end();
       });
   }
   else{
-      response.send('Please enter Username and Password!');
-      response.status(400);
-      response.end();
+      response.status(400).json('Please enter Username and Password!');
   }
 });
 
@@ -170,21 +176,23 @@ router.post("/login", (require, response) => {
 
 // <email>/reservations
 router.get('/:email/reservations',(req, res)=>{
-  const {email} = req.email;
-  const getReserve = "SELECT * FROM Reservation WHERE User.email = " + email ;
-  db.query(getPass, (err,result) => {
+  const { email } = req.params;
+  const getReserve = "SELECT * FROM Reservation WHERE email = \"" + email  + "\";";
+  db.query(getReserve, (err,result) => {
       res.send(result);
   });
 });
 
 //<email>/delete
-router.delete("/:email/reservations/:reservation_id",(req, res) => {
-  const {email} = req.email;
-  const {reservation_id} = reservation_id;
-  const sqlDelete = "DELETE FROM Reservation WHERE reservation_id = "+ reservation_id;
+router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => {
+  const { email , reservation_id, room_number } = req.params;
+  const sqlDelete = "DELETE FROM Reservation WHERE reservation_id = "+ reservation_id + " and email = \"" + email + "\" and room_number = " + room_number + ";";
   db.query(sqlDelete, (err, result) => {
-      if (err) 
-      console.log(err);
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json();
+      }
   });
 } );
 
@@ -200,7 +208,7 @@ router.get('/admin/check-revenue',(req,res) =>{
 router.post('/admin/check-feature',(req,res) => {
   const min_price = req.body.minPrice;
   const max_price = req.body.maxPrice;
-  const feature_query = "SELECT rm.feature, COUNT(res.reservation_id) AS popularity FROM Reservation res JOIN Room rm USING(room_number) WHERE rm.price <= "+ max_price+ " AND rm.price >= "+min_price+"GROUP BY rm.feature ORDER BY rm.feature;";
+  const feature_query = "SELECT feature, COUNT(res.reservation_id) AS popularity FROM Reservation res JOIN Room rm USING(room_number) WHERE rm.price <= "+ max_price+ " AND rm.price >= "+min_price+" GROUP BY rm.feature ORDER BY rm.feature;";
   db.query(feature_query,(err,result) => {
       res.send(result);
   });
@@ -208,7 +216,7 @@ router.post('/admin/check-feature',(req,res) => {
 });
 
 // booking
-router.post('getroom',(req,res) => {
+router.post('/booking/getroom',(req,res) => {
 
   const cust_checkin_year= req.body.checkin_year;
   const cust_checkin_month= req.body.checkin_month;
@@ -216,10 +224,10 @@ router.post('getroom',(req,res) => {
   const cust_checkout_year= req.body.checkin_year;
   const cust_checkout_month=req.body.checkin_month;
   const cust_checkout_date=req.body.checkin_date;
-  const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE cust_checkin_year <= re.checkin_year <= cust_checkout_year  and cust_checkin_month <= re.checkin_month <= cust_checkout_month and cust_checkin_date <= re.checkin_date <= cust_checkout_date;";
+  const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE"+ cust_checkin_year + "<= re.checkin_year <=" + cust_checkout_year+ "and" + cust_checkin_month + "<= re.checkin_month <= "+cust_checkout_month+ "and" + cust_checkin_date + " <= re.checkin_date <= " +cust_checkout_date+";";
 
   db.query(booking_query,(err,result)=> {
-      res.send(result);
+      res.json(result);
   });
 ;
 });
@@ -230,26 +238,40 @@ router.post("/booking",(req,res) => {
   const cust_phone = req.body.phone;
   const cust_lastName = req.body.lastName;
   const cust_firstName = req.body.firstName;
-  const cust_email = req.email;
+  const cust_email = req.body.email;
   const cust_checkin_year= req.body.checkin_year;
   const cust_checkin_month= req.body.checkin_month;
   const cust_checkin_date= req.body.checkin_date;
-  const cust_checkout_year= req.body.checkin_year;
-  const cust_checkout_month=req.body.checkin_month;
-  const cust_checkout_date=req.body.checkin_date;
-  const reservationInsert = "INSERT INTO Reservation (reservationID,selected_room_number,cust_email,cust_checkin_year,cust_checkin_month,cust_checkin_date,cust_checkout_year,cust_checkout_month,cust_checkout_date) VALUES(?,?,?,?,?,?,?,?,?)"
-  const getMaxReservaton = "SELECT MAX(reservation_id) FROM Resrvation;" ; 
+  const cust_checkout_year= req.body.checkout_year;
+  const cust_checkout_month=req.body.checkout_month;
+  const cust_checkout_date=req.body.checkout_date;
+
+  const checkin = new Date(cust_checkin_month+'/'+cust_checkin_date+'/'+cust_checkin_year);
+  const checkout = new Date(cust_checkout_month+'/'+cust_checkout_date+'/'+cust_checkout_year);
+  const days = (date1, date2) => {
+    let differ = date1.getTime() - date2.getTime();
+    let TotalDays = Math.ceil(differ / (1000*3600*24));
+    return TotalDays;
+  };
+
+  const duration = days(checkout, checkin);
+  console.log(duration);
+  const reservationInsert = "INSERT INTO Reservation (reservation_id,room_number,email,checkin_year,checkin_month,checkin_date,checkout_year,checkout_month,checkout_date,duration) VALUES(?,?,?,?,?,?,?,?,?,?);"
+  const getMaxReservaton = "SELECT MAX(reservation_id) as id FROM Reservation;";
   db.query(getMaxReservaton, (err, result) => {
-    if (err){
-      return res.status(400);
+    if (err) {
+      res.status(400).json();
+      return ;
     }else{
-      const reservationID = result + 1;
-      db.query(reservationInsert,[reservationID,selected_room_number,cust_email,cust_checkin_year,cust_checkin_month,cust_checkin_date,cust_checkout_year,cust_checkout_month,cust_checkout_date],(err,result) => { 
+      const reservationID = result[0].id + 1;
+      db.query(reservationInsert,[reservationID,selected_room_number,cust_email,cust_checkin_year,cust_checkin_month,cust_checkin_date,cust_checkout_year,cust_checkout_month,cust_checkout_date,duration],(err,result) => { 
         if (err){
-            return res.status(400);
+            res.status(400).json();
+            console.log(err);
         }else{
-            return res.status(200);
+            res.status(200).json(result);
         }
+        return ;
       });
     };
   });
