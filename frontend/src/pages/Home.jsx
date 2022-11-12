@@ -11,7 +11,9 @@ const Home = () => {
 
 	useEffect(() => {
 		axios.get(PROJECT_PATH + "/" + email).then(res => {
-			if (res.data.membership === 5) {setAdmin(true);}
+			if (res.data.membership === 5) {
+				setAdmin(true);
+			}
 		});
 	}, []);
 

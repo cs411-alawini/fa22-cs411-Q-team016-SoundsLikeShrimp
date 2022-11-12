@@ -35,14 +35,6 @@ const Profile = () => {
       name: values.name,
       phone:values.phone,
     });
-
-		// fetch(PROJECT_PATH + '/' + email, {
-		// 	method: "PATCH",
-		// 	body: JSON.stringify({
-		// 		name: values.name,
-		// 		phone: values.phone,
-		// 	}),
-		// });
 	}
 
 	useEffect(() => {
