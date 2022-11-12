@@ -8,7 +8,7 @@ const Home = () => {
 	const PROJECT_PATH = "http://localhost:5024";
 	const { email } = useParams();
 	const [isAdmin, setAdmin] = useState(false);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(email !== undefined ? true:false);
 
 	useEffect(() => {
 		axios.get(PROJECT_PATH + "/" + email).then(res => {
@@ -16,6 +16,8 @@ const Home = () => {
 				setAdmin(prev => true);
 			}
 			setLoading(false);
+		}).catch(err => {
+			console.log("Not login");
 		});
 	}, []);
 
