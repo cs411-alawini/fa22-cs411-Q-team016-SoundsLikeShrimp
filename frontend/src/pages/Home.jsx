@@ -7,17 +7,15 @@ import axios from "axios";
 const Home = () => {
 	const PROJECT_PATH = "http://localhost:5024";
 	const { email } = useParams();
-	const [isAdmin, setAdmin] = useState(false);
+	const [isAdmin, setAdmin] = useState(true);
 
 	useEffect(() => {
 		axios.get(PROJECT_PATH + "/" + email).then(res => {
-			if (res.data.membership === 5) {
-				setAdmin(true);
+			if (res.data[0].membership === 5) {
+				setAdmin(prev => true);
 			}
 		});
 	}, []);
-
-  
 
   return (
 		<Navbar

@@ -2,13 +2,7 @@ import { List } from "antd";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import axios from "axios";
-const data = [
-  "Racing car sprays burning fuel into crowd.",
-  "Japanese princess to wed commoner.",
-  "Australian walks 100km after outback crash.",
-  "Man charged over missing wedding girl.",
-  "Los Angeles battles huge wildfires.",
-];
+
 const Revenue = () => {
 	const PROJECT_PATH = "http://localhost:5024";
 	const [revenueData, dataRefresh] = useState([]);

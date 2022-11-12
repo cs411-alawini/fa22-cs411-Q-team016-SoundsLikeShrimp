@@ -61,7 +61,6 @@ router.get("/:email",(req,res) => {
       if(!result){
           res.send("User not found");
       }else{
-          console.log(result)
           res.send(result);
       }
   });

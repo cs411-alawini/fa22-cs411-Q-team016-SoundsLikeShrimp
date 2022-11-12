@@ -20,14 +20,6 @@ function padLeadingZeros(num, size) {
   return s;
 }
 
-const data = [
-  { room_number: "item" },
-  { room_number: 2 },
-  { room_number: 3 },
-  { room_number: 4 },
-  { room_number: 5 },
-];
-
 const Booking = () => {
   const PROJECT_PATH = "http://localhost:5024";
   const navigate = useNavigate();
