@@ -77,7 +77,7 @@ router.patch("/:email",(req,res) => {
       }
   });
   if (name){
-      updateName = "UPDATE User SET User.name = name WHERE User.email = \"" + email + "\";";
+      updateName = "UPDATE User SET User.name = \"" + name + "\" WHERE User.email = \"" + email + "\";";
       db.query(updateName, (err, result) => {
           // res.send(`name update successfully`);
           // res.status(200).json();
@@ -96,7 +96,7 @@ router.patch("/:email",(req,res) => {
   //     });
   // }
   if (phone){
-      updatePhone = "UPDATE User SET User.phone = phone WHERE User.email = \"" + email + "\";";
+      updatePhone = "UPDATE User SET User.phone = \"" + phone + "\" WHERE User.email = \"" + email + "\";";
       db.query(updatePhone, (err, result) => {
           // res.send(`phone update successfully`);
           if (err) {
@@ -228,7 +228,7 @@ router.post('/booking/getroom',(req,res) => {
   //const booking_query = "(SELECT (room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE room_number not in (SELECT room_number FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date));)) MINUS";
   const booking_query = "SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re EXCEPT SELECT room_number, price, feature, accomodation FROM Room ro natural join Reservation re WHERE " + checkin_date + " BETWEEN re.checkin_date AND re.checkout_date AND " +checkout_date+ " BETWEEN re.checkin_date AND re.checkout_date;";
   db.query(booking_query,(err,result)=> {
-      console.log(err)
+      console.log(err);
       res.json(result);
   });
 ;
