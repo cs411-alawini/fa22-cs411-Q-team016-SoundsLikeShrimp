@@ -30,7 +30,7 @@ router.post("/register",(req,res) => {
   const name = user.name;
   const phone = user.phone;
   const membership = user.membership;
-  const addNewUser = "INSERT INTO User (email,name,password,phone,membership) VALUES(?,?,?,?,1)";
+  const addNewUser = "INSERT INTO User (email,name,password,phone,membership) VALUES(?,?,?,?,?)";
   db.query(addNewUser,[email,name,password,phone,membership],(err,result) => {
       if(err){
           // res.status(400);
@@ -61,6 +61,7 @@ router.get("/:email",(req,res) => {
       if(!result){
           res.send("User not found");
       }else{
+          console.log(result)
           res.send(result);
       }
   });
