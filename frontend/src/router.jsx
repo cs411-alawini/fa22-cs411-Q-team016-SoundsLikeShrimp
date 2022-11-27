@@ -20,9 +20,9 @@ function CreateRoutes() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/check-revenue" element={<Revenue />} />
-          <Route path="/admin/check-feature" element={<Feature />} />
+          <Route path="/:email/admin" element={<Admin />} />
+          <Route path="/:email/admin/check-revenue" element={<Revenue />} />
+          <Route path="/:email/admin/check-feature" element={<Feature />} />
           <Route path="/:email" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/booking" element={<Booking />} />

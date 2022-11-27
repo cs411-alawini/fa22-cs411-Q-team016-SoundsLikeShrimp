@@ -2,9 +2,29 @@ import { List } from "antd";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Revenue = () => {
 	const PROJECT_PATH = "http://localhost:5024";
+	const { email } = useParams();
+  const [isAdmin, setAdmin] = useState(false);
+  const [loading, setLoading] = useState(email !== undefined ? true : false);
+
+  useEffect(() => {
+    axios
+      .get(PROJECT_PATH + "/" + email)
+      .then((res) => {
+        if (res.data[0].membership === 5) {
+          setAdmin((prev) => true);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Not login");
+      });
+  }, []);
+
+
 	const [revenueData, dataRefresh] = useState([]);
 	const fetchData = () => {
 		axios.get(PROJECT_PATH + "/admin/check-revenue").then(res => {
@@ -24,9 +44,12 @@ const Revenue = () => {
 		fetchData();
 	}, []);
 	
+	if (loading) {
+		return <h1>Still Loading</h1>
+	} else {
 	return (
 		<>
-			<Navbar />
+			<Navbar email={email} isAdmin={isAdmin} />
 			<List
 				bordered
 				dataSource={revenueData}
@@ -37,6 +60,6 @@ const Revenue = () => {
 				)}
 			/>
 		</>
-	)
+	);}
 };
 export default Revenue;
