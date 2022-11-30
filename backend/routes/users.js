@@ -183,6 +183,58 @@ router.get('/:email/reservations',(req, res)=>{
   });
 });
 
+// room number
+// service_id
+
+
+router.post("/:email/service",(req,res)=>{
+  const {email, service_id, room_number} = req.params;
+  const hasRoom = "SELECT * FROM Request JOIN Reservation USING room_number WHERE room_number = "+room_number+";"
+  db.query(hasRoom,(err,result) => {
+
+    if (err || res.length == 0) {
+      res.status(400).json();
+      console.log(err);
+    } else {
+    const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(NULL,?,?);"
+    db.query(getService,[0,service_id,room_number], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json();
+      }
+    });
+    }
+  });
+  
+
+});
+
+// show Charter table
+router.get('/admin/charter',(req, res)=>{
+  const getCharter = "SELECT * FROM Charter;";
+  db.query(getCharter, (err,result) => {
+      res.send(result);
+  });
+});
+
+// show Employee table
+router.get('/admin/employee',(req, res)=>{
+  const getEmployee = "SELECT * FROM Employee;";
+  db.query(getEmployee, (err,result) => {
+      res.send(result);
+  });
+});
+
+// show Employee salary
+router.get('/admin/salary',(req, res)=>{
+  const getEmployeeSalary = "SELECT SUM(salary) FROM Employee;";
+  db.query(getEmployeeSalary, (err,result) => {
+      res.send(result);
+  });
+});
+
+
 //<email>/delete
 router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => {
   const { email , reservation_id, room_number } = req.params;
@@ -198,9 +250,17 @@ router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => 
 
 // admin/check-revenue 
 router.get('/admin/check-revenue',(req,res) =>{
-  const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
-  db.query(revenue_query,(err,result) => {
-      res.send(result);
+  const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
+
+  const service_query = "SELECT res.checkin_month AS month, COUNT(s.service_id) * s.price AS service_revenue FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
+  db.query(revenue_query,(err,result1) => {
+    db.query(service_query,(err,result2) => {
+      for (var attributename in result2){
+        result2[attributename] = result2[attributename] + result1[attributename]
+      }
+      res.send(result2);
+    });
+      
   });
 });
 
@@ -243,6 +303,8 @@ router.post('/booking/getroom',(req,res) => {
   });
 ;
 });
+
+
 
 router.post("/booking",(req,res) => {
   
