@@ -85,4 +85,6 @@ CREATE TABLE Request(
                     ON UPDATE CASCADE,
 
     CONSTRAINT PRIMARY KEY(time, room_number, service_id)
-)
+);
+
+SET SQL_SAFE_UPDATES = 0;

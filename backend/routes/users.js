@@ -214,6 +214,16 @@ router.post('/admin/check-feature',(req,res) => {
   });
 
 });
+router.post('/admin/change-price',(req,res) =>{
+  const min_price = req.body.minPrice;
+  const max_price = req.body.maxPrice;
+  const revenue_query = "call Result("+min_price+","+max_price+");";
+  db.query(revenue_query,(err,result) => {
+      console.log(result);
+      res.send(result);
+  });
+});
+
 
 // booking
 router.post('/booking/getroom',(req,res) => {
