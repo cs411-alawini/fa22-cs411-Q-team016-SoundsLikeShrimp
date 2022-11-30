@@ -1,4 +1,4 @@
-import { List } from "antd";
+import { List, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import axios from "axios";
@@ -43,6 +43,12 @@ const Revenue = () => {
 	useEffect(() => {
 		fetchData();
 	}, []);
+
+	const changePrice = () => {
+		// axios.get(PROJECT_PATH + "/admin/change-price").then(res => {
+		console.log("clicked");
+		// });
+	}
 	
 	if (loading) {
 		return <h1>Still Loading</h1>
@@ -50,6 +56,7 @@ const Revenue = () => {
 	return (
 		<>
 			<Navbar email={email} isAdmin={isAdmin} />
+			<Button type="primary" onClick={changePrice}>Update price</Button>
 			<List
 				bordered
 				dataSource={revenueData}
