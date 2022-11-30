@@ -24,14 +24,14 @@ CREATE TABLE Reservation(
     reservation_id  INT,
     email           VARCHAR(255),
     room_number     INT,
-    checkin         DATE,
-    checkout        DATE,
     checkin_year    INT,
     checkin_month   INT,
     checkin_date    INT,
     checkout_year   INT,
     checkout_month  INT,
     checkout_date   INT,
+    checkin         DATE,
+    checkout        DATE,
     duration        INT,
 
     FOREIGN KEY(email) REFERENCES User(email) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -67,9 +67,7 @@ CREATE TABLE Charter(
     mob_id          INT,
     email           VARCHAR(255),
     destination     VARCHAR(255),
-    rent_date       DATE NOT NULL,
-    time            TIME NOT NULL,
-    price           INT NOT NULL,
+    rent_date_time       DATE NOT NULL,
 
     FOREIGN KEY(mob_id) REFERENCES Mobiles(mob_id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(email) REFERENCES User(email) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -85,6 +83,4 @@ CREATE TABLE Request(
                     ON UPDATE CASCADE,
 
     CONSTRAINT PRIMARY KEY(time, room_number, service_id)
-);
-
-SET SQL_SAFE_UPDATES = 0;
+)

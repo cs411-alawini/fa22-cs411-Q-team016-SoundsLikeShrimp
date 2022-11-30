@@ -67,9 +67,7 @@ CREATE TABLE Charter(
     mob_id          INT,
     email           VARCHAR(255),
     destination     VARCHAR(255),
-    rent_date       DATE NOT NULL,
-    time            TIME NOT NULL,
-    price           INT NOT NULL,
+    rent_date_time       DATE NOT NULL,
 
     FOREIGN KEY(mob_id) REFERENCES Mobiles(mob_id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(email) REFERENCES User(email) ON UPDATE CASCADE ON DELETE CASCADE,
