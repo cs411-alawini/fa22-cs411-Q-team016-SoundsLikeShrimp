@@ -68,10 +68,6 @@ const Reservation = () => {
       });
   };
 
-  useEffect(() => {
-    getReservation();
-  }, []);
-
   const delRoom = (resId, room_number) => {
     axios
       .delete(

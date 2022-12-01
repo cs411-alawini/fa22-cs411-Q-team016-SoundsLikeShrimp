@@ -10,6 +10,9 @@ import Reservation from "./pages/Reservation";
 import Revenue from "./pages/Revenue";
 import Feature from "./pages/Feature";
 import Service from "./pages/Service";
+import Hiring from "./pages/Hiring";
+import Employ from "./pages/Employ";
+import Layoff from "./pages/Layoff";
 // import Password from './pages/Password';
 // import ResetPassword from './pages/ResetPassword';
 // import {PasswordResetEmail} from './pages/PasswordResetEmail';
@@ -30,6 +33,9 @@ function CreateRoutes() {
           <Route path="/:email/info" element={<Profile />} />
           <Route path="/:email/reservations" element={<Reservation />} />
           <Route path="/:email/service" element={<Service />} />
+          <Route path="/:email/admin/hiring" element={<Hiring />} />
+          <Route path="/:email/admin/hire" element={<Employ />} />
+          <Route path="/:email/admin/layoff" element={<Layoff />} />
         </Routes>
       </Router>
     </div>

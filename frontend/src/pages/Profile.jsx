@@ -10,7 +10,7 @@ const Profile = () => {
   const { email } = useParams();
   const [isAdmin, setAdmin] = useState(false);
   const [loading, setLoading] = useState(email !== undefined ? true : false);
-  
+
   const [user, setUser] = useState({
     name: "",
     phone: "",
@@ -52,7 +52,7 @@ const Profile = () => {
         prev.name = values.name;
       }
       if (values.phone !== undefined) {
-      prev.phone = values.phone;
+        prev.phone = values.phone;
       }
       return prev;
     });
@@ -64,7 +64,6 @@ const Profile = () => {
 
     navigate("/" + email + "/info");
   };
-
 
   if (loading) {
     return <h1>Still Loading</h1>;
@@ -100,20 +99,19 @@ const Profile = () => {
         </Form>
 
         <Space
-    direction="vertical"
-    size="middle"
-    style={{
-      display: 'flex',
-    }}
-  >
-    <Card title="Profile" size="small">
-      <p>Email:       {email}</p>
-      <p>Name:        {user.name}</p>
-      <p>Phone:       {user.phone}</p>
-      <p>Membership:  {user.membership}</p>
-    </Card>
-  </Space>
-        
+          direction="vertical"
+          size="middle"
+          style={{
+            display: "flex",
+          }}
+        >
+          <Card title="Profile" size="small">
+            <p>Email: {email}</p>
+            <p>Name: {user.name}</p>
+            <p>Phone: {user.phone}</p>
+            <p>Membership: {user.membership}</p>
+          </Card>
+        </Space>
       </>
     );
   }

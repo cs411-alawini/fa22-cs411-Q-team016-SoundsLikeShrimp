@@ -41,7 +41,7 @@ function Admin() {
         <Button onClick={() => navigate("/" + email + "/admin/check-feature")}>
           Popular Feature
         </Button>
-        <Button type="primary" onClick={() => navigate("/" + email + "/hiring")}>
+        <Button type="primary" onClick={() => navigate("/" + email + "/admin/hiring")}>
           Hiring Management
         </Button>
       </div>
