@@ -198,7 +198,7 @@ router.post("/:email/service",(req,res)=>{
       res.status(400).json();
       console.log(err);
     } else {
-    const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(NULL,?,?);"
+    const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(?,?,?);"
     db.query(getService,[room_number,service_id], (err, result) => {
       if (err) {
         console.log(err);
