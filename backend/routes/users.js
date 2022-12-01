@@ -290,7 +290,7 @@ router.post('/admin/hire',(req,res) => {
   const add_employee = "INSERT INTO Employee (emp_id,title,salary,mob_id) VALUES(?,?,?,NULL);";
   db.query(getMaxemp_id, (err, result) => {
     const emp_id = result[0].id + 1;
-    db.query(feature_query,[emp_id,title,salary],(err,result1) => {
+    db.query(add_employee, [emp_id,title,salary],(err,result1) => {
       if (err) {
         console.log(err);
       } else {
@@ -301,21 +301,21 @@ router.post('/admin/hire',(req,res) => {
 });
 
 // admin/delete
-router.delete('/admin/employee/layoff',(req, res)=>{
+router.delete('/admin/layoff/:emp_id',(req, res)=>{
   // if old employee has a mob_id:
   //   1. find new employee who mob_id is NULL
   //   2. update new employee's mob_id to this mob_id
   //   3. update mob_id's emp_id to the new emp_id
   //   4. update old employee's mob_id to NULL
-  const emp_id = req.body.emp_id;
+  const {emp_id} = req.params;
   const checkMobId = "SELECT mob_id FROM Employee WHERE emp_id = " + emp_id + ";";
-  const findNewEmpId = "SELECT emp_id FROM Employee WHERE mob_id = NULL LIMIT 1;";
+  const findNewEmpId = "SELECT emp_id FROM Employee WHERE mob_id IS NULL LIMIT 1;";
   
   db.query(checkMobId, (err,result) => {
     if (err) {
       console.log(err);
     } else {
-      if (result[0].mob_id != NULL){
+      if (result[0].mob_id){
         const newMobId = result[0].mob_id
         db.query(findNewEmpId, (err,result1) => {
           const newEmpId = result1[0].emp_id
@@ -333,6 +333,7 @@ router.delete('/admin/employee/layoff',(req, res)=>{
       db.query(layoffEmployee, (err,result5) => {
         if (err) {
           console.log(err);
+          res.status(400).json();
         } else {
           res.status(200).json();
         }
