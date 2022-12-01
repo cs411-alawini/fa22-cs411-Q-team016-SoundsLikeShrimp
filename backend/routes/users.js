@@ -188,8 +188,10 @@ router.get('/:email/reservations',(req, res)=>{
 
 
 router.post("/:email/service",(req,res)=>{
-  const {email, service_id, room_number} = req.params;
-  const hasRoom = "SELECT * FROM Request JOIN Reservation USING room_number WHERE room_number = "+room_number+";"
+  const email = req.params;
+  const service_id = req.body.service_id;
+  const room_number = req.body.room_number;
+  const hasRoom = "SELECT * FROM Reservation WHERE room_number = "+room_number+";"
   db.query(hasRoom,(err,result) => {
 
     if (err || res.length == 0) {
