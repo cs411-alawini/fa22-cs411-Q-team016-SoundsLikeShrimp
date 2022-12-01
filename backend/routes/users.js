@@ -252,20 +252,11 @@ router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => 
 // // admin/check-revenue 
 router.get('/admin/check-revenue',(req,res) =>{
   const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
-
-  const service_query = "SELECT res.checkin_month AS month, COUNT(s.service_id) * s.price AS service_revenue FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
+  //const service_query = "SELECT res.checkin_month AS month, SUM(s.price) * s.price AS service_revenue FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
+  //const revnueservice_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue,(SELECT COUNT(s.service_id) * s.price FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month) as service_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
   db.query(revenue_query,(err,result1) => {
-    db.query(service_query,(err,result2) => {
-      res.send(result1);
       console.log(result1);
-      console.log(result2);
-      for (var attributename in result2){
-        result2[attributename] = result2[attributename] + result1[attributename]
-      }
-      console.log(result2);
-      
-    });
-      
+      res.send(result1);
   });
 });
 
