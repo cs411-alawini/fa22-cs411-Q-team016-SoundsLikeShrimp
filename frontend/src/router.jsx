@@ -29,7 +29,7 @@ function CreateRoutes() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/:email/info" element={<Profile />} />
           <Route path="/:email/reservations" element={<Reservation />} />
-          <Route path="/:email/services" element={<Service />} />
+          <Route path="/:email/service" element={<Service />} />
         </Routes>
       </Router>
     </div>

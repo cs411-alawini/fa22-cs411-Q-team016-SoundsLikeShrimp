@@ -15,37 +15,57 @@ const data = [
 const Reservation = () => {
   const PROJECT_PATH = "http://localhost:5024";
   const { email } = useParams();
+  const [isAdmin, setAdmin] = useState(false);
+  const [loading, setLoading] = useState(email !== undefined ? true : false);
+
+  useEffect(() => {
+    axios
+      .get(PROJECT_PATH + "/" + email)
+      .then((res) => {
+        if (res.data[0].membership === 5) {
+          setAdmin((prev) => true);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Not login");
+      });
+    getReservation();
+  }, []);
 
   const [myRoom, setRoom] = useState([]);
   const getReservation = () => {
     console.log("Start get reservation");
-    axios.get(PROJECT_PATH + "/" + email + "/reservations").then(res => {
-      console.log(res);
-      res.data.map((oldReservation) => {
-        setRoom((prev) => {
-          return [
-            ...prev,
-            {
-              reservation_id: oldReservation.reservation_id,
-              room_number: oldReservation.room_number,
-              email: oldReservation.email,
-              duration: oldReservation.duration,
-              checkin_year: oldReservation.checkin_year,
-              checkin_month: oldReservation.checkin_month,
-              checkin_date: oldReservation.checkin_date,
-              checkout_year: oldReservation.checkout_year,
-              checkout_month: oldReservation.checkout_month,
-              checkout_date: oldReservation.checkout_date,
-              checkin: oldReservation.checkin,
-              checkout: oldReservation.checkout,
-            },
-          ];
+    axios
+      .get(PROJECT_PATH + "/" + email + "/reservations")
+      .then((res) => {
+        console.log(res);
+        res.data.map((oldReservation) => {
+          setRoom((prev) => {
+            return [
+              ...prev,
+              {
+                reservation_id: oldReservation.reservation_id,
+                room_number: oldReservation.room_number,
+                email: oldReservation.email,
+                duration: oldReservation.duration,
+                checkin_year: oldReservation.checkin_year,
+                checkin_month: oldReservation.checkin_month,
+                checkin_date: oldReservation.checkin_date,
+                checkout_year: oldReservation.checkout_year,
+                checkout_month: oldReservation.checkout_month,
+                checkout_date: oldReservation.checkout_date,
+                checkin: oldReservation.checkin,
+                checkout: oldReservation.checkout,
+              },
+            ];
+          });
+          return oldReservation;
         });
-        return oldReservation;
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   useEffect(() => {
@@ -53,40 +73,58 @@ const Reservation = () => {
   }, []);
 
   const delRoom = (resId, room_number) => {
-    axios.delete(PROJECT_PATH + "/" + email + "/reservations/" + resId + "/" + room_number).then(res => {
-      getReservation();
-    }).catch(err => {
-      console.log(err);
-    });
+    axios
+      .delete(
+        PROJECT_PATH +
+          "/" +
+          email +
+          "/reservations/" +
+          resId +
+          "/" +
+          room_number
+      )
+      .then((res) => {
+        getReservation();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  return (
-    <>
-      <Navbar email={email} />
+  if (loading) {
+    return <h1>Still Loading</h1>;
+  } else {
+    return (
+      <>
+        <Navbar email={email} isAdmin={isAdmin} />
 
-      <List
-        bordered
-        dataSource={myRoom}
-        renderItem={(item) => (
-          <List.Item
-            actions={[
-              <Button>Modify</Button>,
-              <Button
-                onClick={() => {
-                  setRoom([]);
-                  delRoom(item.reservation_id, item.room_number);
-                }}
-              >
-                Cancel
-              </Button>,
-            ]}
-          >
-            {"Reservation id: " + item.reservation_id + " Room Number: "+ item.room_number}
-          </List.Item>
-        )}
-      />
-    </>
-  );
+        <List
+          bordered
+          dataSource={myRoom}
+          renderItem={(item) => (
+            <List.Item
+              actions={[
+                <Button>Modify</Button>,
+                <Button
+                  onClick={() => {
+                    setRoom([]);
+                    delRoom(item.reservation_id, item.room_number);
+                  }}
+                >
+                  Cancel
+                </Button>,
+              ]}
+            >
+              {"Reservation id: " +
+                item.reservation_id +
+                " Room Number: " +
+                item.room_number}
+            </List.Item>
+          )}
+        />
+      </>
+    );
+  }
 };
 
 export default Reservation;

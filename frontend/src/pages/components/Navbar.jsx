@@ -26,19 +26,27 @@ const Navbar = (props) => {
     label: "Booking",
     key: "booking",
   };
+  const serviceItem = {
+    label: "Service",
+    key: "service"
+  }
   const adminLink = {
     label: "Admin",
     key: "admin",
   };
   const myReserve = {
     label: "Reservation",
-    key: "reservation",
+    key: "reservations",
   };
   const [items, setItem] = useState([homeItem, loginItem, bookItem]);
   const toRender = [
     {
       shouldRender: props.email !== undefined,
       renderItem: myReserve,
+    },
+    {
+      shouldRender: props.email !== undefined,
+      renderItem: serviceItem,
     },
     {
       shouldRender: props.isAdmin,
@@ -59,11 +67,9 @@ const Navbar = (props) => {
       } else {
         navigate("/");
       }
-    } else if (e.key === "reservation") {
-      navigate("/" + props.email + "/reservations");
-    } else if (e.key === "admin") {
-			navigate("/" + props.email + "/admin");
-	} else {
+    } else if (e.key === "reservations" || e.key === "admin" || e.key === "service") {
+      navigate("/" + props.email + "/" + e.key);
+    } else {
       navigate("/" + e.key);
     }
   };

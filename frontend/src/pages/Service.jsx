@@ -1,56 +1,63 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import {
   Form,
-  Input,
   Button,
   DatePicker,
   InputNumber,
-  List,
-  message,
+	Select,
+	message,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import axios from "axios";
-const { RangePicker } = DatePicker;
 
-function padLeadingZeros(num, size) {
-  let s = num + "";
-  while (s.length < size) s = "0" + s;
-  return s;
-}
 
 const Service = () => {
   const PROJECT_PATH = "http://localhost:5024";
   const navigate = useNavigate();
-  
+	const dateFormat = "YYYY/MM/DD";
+  const { email } = useParams();
+  const [isAdmin, setAdmin] = useState(false);
+  const [loading, setLoading] = useState(email !== undefined ? true : false);
+
+  useEffect(() => {
+    axios
+      .get(PROJECT_PATH + "/" + email)
+      .then((res) => {
+        if (res.data[0].membership === 5) {
+          setAdmin((prev) => true);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Not login");
+      });
+  }, []);
 
 
-  const [toBook, setRoomNum] = useState(-1);
+	// Make request
+	const request = (values) => {
 
-  const book = (values) => {
-    console.log(values);
-    axios.post(PROJECT_PATH + "/booking", {
-      room_number: toBook,
-      ...stayTime,
-      email: values.email,
-      firstName: values.firstName,
-      lastName: values.firstName,
-      phone: values.phone,
-    }).then(res => {
-      message.success("Booking success")
+		axios.post(PROJECT_PATH + "/" + email + "/service", {
+			room_number: values.room_number,
+			service_id: values.service_id,
+			date: values.date.format().substring(0, 10),
+		}).then(res => {
+      message.success("Request success")
       navigate("/" + values.email);
       
     }).catch(err => {
-      message.error("Room not availible")
+      message.error("Invalid request, have you reserved a room?")
     })
+	}
 
-  };
-
-  return (
-    <>
-			<Navbar />
-      <Form
+  if (loading) {
+    return <h1>Still Loading</h1>;
+  } else {
+    return (
+      <>
+        <Navbar email={email} isAdmin={isAdmin} />
+        <Form
         labelCol={{
           span: 4,
         }}
@@ -58,58 +65,39 @@ const Service = () => {
           span: 14,
         }}
         layout="horizontal"
-        onFinish={book}
+        onFinish={request}
       >
-        <Form.Item label="Stay">
-          <RangePicker
-            defaultValue={[
-              moment(defaultDate, dateFormat),
-              moment(defaultDate, dateFormat),
-            ]}
-            onChange={showRoom}
-            format={dateFormat}
-          />
-        </Form.Item>
-
-        <Form.Item label="Rooms">
-          <List
-            bordered
-            dataSource={rooms}
-            renderItem={(item) => (
-              <List.Item
-                onClick={() => {
-                  setRoomNum(item.room_number);
-                }}
-              >
-                {item.room_number}
-              </List.Item>
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item label="Email" name="email">
-          <Input />
-        </Form.Item>
-        <Form.Item label="First Name" name="firstName">
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Last Name" name="lastName">
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Phone number" name="phone">
+       <Form.Item label="room_number" name="room_number">
           <InputNumber />
         </Form.Item>
+				<Form.Item label="date" name="date">
+          <DatePicker format={dateFormat}/>
+        </Form.Item>
+				<Form.Item label="service_id" name="service_id">
 
-        <Form.Item>
+					<Select>
+						<Select.Option value="1">1</Select.Option>
+						<Select.Option value="2">2</Select.Option>
+						<Select.Option value="3">3</Select.Option>
+						<Select.Option value="4">4</Select.Option>
+						<Select.Option value="5">5</Select.Option>
+						<Select.Option value="6">6</Select.Option>
+						<Select.Option value="7">7</Select.Option>
+						<Select.Option value="8">8</Select.Option>
+						<Select.Option value="9">9</Select.Option>
+						<Select.Option value="10">10</Select.Option>
+					</Select>
+        </Form.Item>
+				<Form.Item>
           <Button type="primary" htmlType="submit">
-            Book!
+            Get Service!
           </Button>
         </Form.Item>
+			 
       </Form>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default Service;
