@@ -251,7 +251,7 @@ router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => 
 
 // // admin/check-revenue 
 router.get('/admin/check-revenue',(req,res) =>{
-  const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
+  const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
   //const service_query = "SELECT res.checkin_month AS month, SUM(s.price) * s.price AS service_revenue FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
   //const revnueservice_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue,(SELECT COUNT(s.service_id) * s.price FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month) as service_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
   db.query(revenue_query,(err,result1) => {
@@ -277,6 +277,67 @@ router.post('/admin/change-price',(req,res) =>{
   db.query(revenue_query,(err,result) => {
       console.log(result);
       res.send(result);
+  });
+});
+
+// admin/hire
+router.post('/admin/hire',(req,res) => {
+  // const emp_id = req.body.emp_id;
+  const title = req.body.title;
+  const salary = req.body.salary;
+  // const mob_id = req.body.mob_id;
+  const getMaxemp_id =  "SELECT MAX(emp_id) as id FROM Employee;";
+  const add_employee = "INSERT INTO Employee (emp_id,title,salary,mob_id) VALUES(?,?,?,NULL);";
+  db.query(getMaxemp_id, (err, result) => {
+    const emp_id = result[0].id + 1;
+    db.query(feature_query,[emp_id,title,salary],(err,result1) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json();
+      }
+    });
+  });
+});
+
+// admin/delete
+router.delete('/admin/employee/layoff',(req, res)=>{
+  // if old employee has a mob_id:
+  //   1. find new employee who mob_id is NULL
+  //   2. update new employee's mob_id to this mob_id
+  //   3. update mob_id's emp_id to the new emp_id
+  //   4. update old employee's mob_id to NULL
+  const emp_id = req.body.emp_id;
+  const checkMobId = "SELECT mob_id FROM Employee WHERE emp_id = " + emp_id + ";";
+  const findNewEmpId = "SELECT emp_id FROM Employee WHERE mob_id = NULL LIMIT 1;";
+  
+  db.query(checkMobId, (err,result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (result[0].mob_id != NULL){
+        const newMobId = result[0].mob_id
+        db.query(findNewEmpId, (err,result1) => {
+          const newEmpId = result1[0].emp_id
+          const updateNewEmpId = "UPDATE Employee SET mob_id = " + newMobId + " WHERE emp_id = "+ newEmpId +";";
+          db.query(updateNewEmpId, (err,result2) => {
+            const updateNewMobId = "UPDATE Mobiles SET emp_id = " + newEmpId + " WHERE mob_id = "+ newMobId +";";
+            db.query(updateNewMobId, (err,result3) => {
+              const updateOldEmpId = "UPDATE Employee SET mob_id = NULL WHERE emp_id = "+ emp_id +";";
+              db.query(updateOldEmpId, (err,result4) => {});
+            });
+          });
+        });
+      }
+      const layoffEmployee = "DELETE FROM Employee WHERE emp_id = "+ emp_id + ";";
+      db.query(layoffEmployee, (err,result5) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.status(200).json();
+        }
+      });
+    }
   });
 });
 
