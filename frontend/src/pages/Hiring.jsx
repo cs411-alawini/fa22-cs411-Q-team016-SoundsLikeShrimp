@@ -40,9 +40,9 @@ const Hiring = () => {
 				<Button onClick={() => navigate("/" + email + "/admin/layoff")}>
 					Layoff
 				</Button>
-				<Button type="primary" onClick={() => navigate("/" + email + "/admin/set-vehicle")}>
+				{/* <Button type="primary" onClick={() => navigate("/" + email + "/admin/set-vehicle")}>
 					Modify Vehicles
-				</Button>
+				</Button> */}
 			</>
 		)
 	}
