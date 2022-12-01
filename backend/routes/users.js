@@ -191,15 +191,16 @@ router.post("/:email/service",(req,res)=>{
   const email = req.params;
   const service_id = req.body.service_id;
   const room_number = req.body.room_number;
-  const hasRoom = "SELECT * FROM Reservation WHERE room_number = "+room_number+";"
+  const time = req.body.date;
+  const hasRoom = "SELECT * FROM Reservation WHERE room_number = "+room_number+";";
   db.query(hasRoom,(err,result) => {
 
     if (err || res.length == 0) {
       res.status(400).json();
       console.log(err);
     } else {
-    const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(?,?,?);"
-    db.query(getService,[room_number,service_id], (err, result) => {
+    const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(?,?,?);";
+    db.query(getService,[time,room_number,service_id], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -255,10 +256,14 @@ router.get('/admin/check-revenue',(req,res) =>{
   const service_query = "SELECT res.checkin_month AS month, COUNT(s.service_id) * s.price AS service_revenue FROM Reservation res JOIN Request USING(room_number) JOIN Service s USING (service_id) GROUP BY res.checkin_month ORDER BY res.checkin_month;";
   db.query(revenue_query,(err,result1) => {
     db.query(service_query,(err,result2) => {
+      res.send(result1);
+      console.log(result1);
+      console.log(result2);
       for (var attributename in result2){
         result2[attributename] = result2[attributename] + result1[attributename]
       }
-      res.send(result2);
+      console.log(result2);
+      
     });
       
   });
