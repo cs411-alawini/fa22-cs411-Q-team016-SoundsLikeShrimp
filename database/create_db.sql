@@ -75,7 +75,7 @@ CREATE TABLE Charter(
 );
 
 CREATE TABLE Request(
-    time            TIME,
+    time            DATE,
     room_number     INT REFERENCES Room(room_number)
                     ON UPDATE CASCADE
                     ON DELETE CASCADE,

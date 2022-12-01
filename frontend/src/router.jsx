@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import Reservation from "./pages/Reservation";
 import Revenue from "./pages/Revenue";
 import Feature from "./pages/Feature";
+import Service from "./pages/Service";
 // import Password from './pages/Password';
 // import ResetPassword from './pages/ResetPassword';
 // import {PasswordResetEmail} from './pages/PasswordResetEmail';
@@ -28,13 +29,7 @@ function CreateRoutes() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/:email/info" element={<Profile />} />
           <Route path="/:email/reservations" element={<Reservation />} />
-          {/* <Route path = "/" element={<Login/>}/>
-                            <Route path = "/home" element={<Home/>}/>
-                <Route path = "/register" element={<Register/>}/>
-                <Route path = "/password" element={<Password/>}/>
-                <Route path = "/reset_password" element={<ResetPassword/>}/> */}
-          {/* <Route path="/password_reset_form/:tokenId" render={(props:any) => <PasswordReset {...props} />} />
-                <Route path="/password_reset_email" element = {<PasswordResetEmail/>} /> */}
+          <Route path="/:email/services" element={<Service />} />
         </Routes>
       </Router>
     </div>

@@ -199,7 +199,7 @@ router.post("/:email/service",(req,res)=>{
       console.log(err);
     } else {
     const getService = "INSERT INTO Request (time,room_number,service_id) VALUES(NULL,?,?);"
-    db.query(getService,[0,service_id,room_number], (err, result) => {
+    db.query(getService,[room_number,service_id], (err, result) => {
       if (err) {
         console.log(err);
       } else {
