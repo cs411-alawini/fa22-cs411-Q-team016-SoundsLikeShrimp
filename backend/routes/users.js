@@ -206,8 +206,6 @@ router.post("/:email/service",(req,res)=>{
     });
     }
   });
-  
-
 });
 
 // show Charter table
@@ -248,7 +246,7 @@ router.delete("/:email/reservations/:reservation_id/:room_number",(req, res) => 
   });
 } );
 
-// admin/check-revenue 
+// // admin/check-revenue 
 router.get('/admin/check-revenue',(req,res) =>{
   const revenue_query = "SELECT res.checkin_month AS month, SUM(res.duration * rm.price) AS room_revenue FROM Reservation res JOIN Room rm USING(room_number) GROUP BY res.checkin_month ORDER BY res.checkin_month;"
 
