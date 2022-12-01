@@ -33,7 +33,7 @@ const Register = () => {
   const register = (values) => {
     axios.post(PROJECT_PATH + "/register", {
       ...values,
-      membership: 5,
+      membership: 1,
     }).then(res => {
       message.success("Registration success!");
       navigate("/" + res.data.email);

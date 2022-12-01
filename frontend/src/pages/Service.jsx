@@ -44,8 +44,7 @@ const Service = () => {
 			date: values.date.format().substring(0, 10),
 		}).then(res => {
       message.success("Request success")
-      navigate("/" + values.email);
-      
+      navigate("/" + email);
     }).catch(err => {
       message.error("Invalid request, have you reserved a room?")
     })
