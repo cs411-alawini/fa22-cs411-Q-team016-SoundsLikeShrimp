@@ -75,16 +75,16 @@ const Service = () => {
 				<Form.Item label="service_id" name="service_id">
 
 					<Select>
-						<Select.Option value="1">1</Select.Option>
-						<Select.Option value="2">2</Select.Option>
-						<Select.Option value="3">3</Select.Option>
-						<Select.Option value="4">4</Select.Option>
-						<Select.Option value="5">5</Select.Option>
-						<Select.Option value="6">6</Select.Option>
-						<Select.Option value="7">7</Select.Option>
-						<Select.Option value="8">8</Select.Option>
-						<Select.Option value="9">9</Select.Option>
-						<Select.Option value="10">10</Select.Option>
+						<Select.Option value="1">Dry cleaning</Select.Option>
+						<Select.Option value="2">Ironing service</Select.Option>
+						<Select.Option value="3">Massages</Select.Option>
+						<Select.Option value="4">Laundry and valet service</Select.Option>
+						<Select.Option value="5">Room service (24-hour)</Select.Option>
+						<Select.Option value="6">Turndown service</Select.Option>
+						<Select.Option value="7">Wine</Select.Option>
+						<Select.Option value="8">Shoeshine service</Select.Option>
+						<Select.Option value="9">Doctor on call</Select.Option>
+						<Select.Option value="10">Courier services</Select.Option>
 					</Select>
         </Form.Item>
 				<Form.Item>

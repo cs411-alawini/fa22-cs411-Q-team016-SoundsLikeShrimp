@@ -100,7 +100,6 @@ const Reservation = () => {
           renderItem={(item) => (
             <List.Item
               actions={[
-                <Button>Modify</Button>,
                 <Button
                   onClick={() => {
                     setRoom([]);
