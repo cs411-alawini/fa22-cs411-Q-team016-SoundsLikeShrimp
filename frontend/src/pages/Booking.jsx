@@ -148,7 +148,7 @@ const Booking = () => {
                   setRoomNum(item.room_number);
                 }}
               >
-                {item.room_number}
+                {"Room Number: " + item.room_number + ", Price: " + item.price}
               </List.Item>
             )}
           />
