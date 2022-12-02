@@ -32,7 +32,7 @@ const Employ = () => {
 			title: values.title,
 			salary: values.salary,
 		}).then(res => {
-			message.success("Welcome to our new employee")
+			message.success("Welcome to our company")
 			navigate("/" + email)
 		}).catch(err => {
 			message.error("Cannot hire employ")
