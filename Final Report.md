@@ -1,25 +1,6 @@
-Please list out changes in directions of your project if the final project is different from your original proposal (based on your stage 1 proposal submission).
-
-Discuss what you think your application achieved or failed to achieve regarding its usefulness.
-
-Discuss if you changed the schema or source of the data for your application
-
-Discuss what you change to your ER diagram and/or your table implementations. 
-  What are some differences between the original design and the final design? Why? What do you think is a more suitable design? 
- 
-Discuss what functionalities you added or removed. Why?
-
-Explain how you think your advanced database programs complement your application.
-Each team member should describe one technical challenge that the team encountered. 
-  This should be sufficiently detailed such that another future team could use this as helpful advice if they were to start a similar project or where to maintain your project. 
-Are there other things that changed comparing the final application with the original proposal?
-Describe future work that you think, other than the interface, that the application can improve on
-Describe the final division of labor and how well you managed teamwork. 
-
-
 # Difference from Original Proposal
-`The rudimentary users can only make reservations with the number of travelers and the time they stay.` After thorough consideration, we decided to drop this feature because this is not suitable to categorize customers and limit their optioins base on membership.
-As proposal the user can unlock more feature such as room preference selection, shuttle bus reservation and additional room services as their membership increase. We then decided to open our services to all customers.
+`The rudimentary users can only make reservations with the number of travelers and the time they stay.` After thorough consideration, we decided to drop this feature because this is not suitable to categorize customers and limit their options based on membership.
+As proposed, the user can unlock more features such as room preference selection, shuttle bus reservation and additional room services as their membership increases. We then decided to open our services to all customers.
 The functionality of `membership` will be used as the reference for discount in the future work.
 To sum up, we deprecated the feature of `membership` along with its recommendation functionality.
 Except for this, we've matched all the features from the proposal.
@@ -32,6 +13,7 @@ We've accomplished this application. The admin can easily check the revenue by c
 ```
 Service management: The service database will provide all the service information that the hotel provided. The admin can easily schedule the human resources according to the time, and report the availability.
 ```
+We partially accomplished this application. The customer can request a service during their stay. However, we failed to calculate how many human resources each service needs.  The admin still can list out how many services are requested per day and can allocate the human resource manually by checking our service table.
 ```
 HR management: We integrate our management database with HR database to keep all interactions with employees under control. Among all the benefits are task management and time-scheduling. The manager of the hotel can assign tasks and track the completion of tasks in the system. In this way, it saves a lot of time for human resources distribution.
 ```
@@ -41,11 +23,35 @@ We change the data type of date in the `Reservation` table from `INT` to `DATE` 
 # ER diagram Modification 
 We did not change the ER diagram, it is the same as the proposal.
 
-# Newly Added Functionality 
-Functionalties we newly added are listed below 
+# Newly Added Functionality (Creative Component)
+Functionalities we newly added are listed below 
 - `check salary`: The admin can observe the total employees salary that month for revenue calculation.
-- `change price`: If the revenue is less than a certain value, the admin can hold a promotion, all room price will have a 10% off discount.
+- `change price`: If the revenue is less than a certain value, the admin can hold a promotion, all room prices will have a 10% off discount.
 - `hire`: The admin can hire a new employee by providing `employee_id`,`employee_title`,`mobile_id`,`salary`. The data will be inserted into `Employee` table for future human resource management.
-- `layoff`: The admin can layoff certain employee using provided `employee_id`. The data will be deleted from the `Employee` table for human resource management.
+- `layoff`: The admin can lay off a certain employee using provided `employee_id`. The data will be deleted from the `Employee` table for human resource management.
 
-
+# Achieved or Failed
+- ✅ The customer can book a room after successfully registering on our website.
+- ✅ The customer can make a request to the service they want during their stay.
+- ✅ The membership will be upgraded as the number of reservations of the customer increases.
+- ✅ The admin can see the revenue per month which is composed of every room that is booked and multiply its price from our system directly.
+- ✅ The admin can promote a price discount whenever they feel like it in our system.
+- ✅ The admin can directly hire a person, the id will be auto added into our database system to save the redundant paperwork.
+- ✅ The admin can layoff people with the provided employee id in our system
+- ❌ Fully functional membership mechanism
+- ❌ Customized membership base preference recommendation
+- ❌ Deal notification system
+- ❌ Detailed Human Resource management system that support real-time resource prearrangement and optimized work distribution.
+# Technical Challenge 
+- cmlin2: This is my first time using node.js to develop a project. At First, I was confused by the different modules between CommonJS and ES modules. What's worse, my teammate and I chose the different module at the early stage, luckily after discussion we decided to go with CommonJS since it is more convenient for us to interact with SQL. During the merge/transform there are a lot of incompatible components that need to be resolved. The process is hard but the result is great.
+- 
+# Teamwork Distribution
+- cmlin2:Backend API(Node.js), Database internal operations (MySQL)
+- 
+Overall, our team has good work distribution and a great team atmosphere. The communication is direct and clear, each member is assigned to the position that he is comfortable with. Most importantly, the TA,Naifu Zheng, is very supportive and provided a lot of useful advice that guides us to the right direction.
+# Future Work
+1. More sophisticated user interface
+2. Transfer data from SQL to NoSQL for flexibility
+3. Implement fully functional "membership mechanism" for preference suggestion
+4. Combine with notification systems(SMS message, email)
+5. Combine with online payment system
