@@ -30,14 +30,18 @@ Functionalities we newly added are listed below
 - `hire`: The admin can hire a new employee by providing `employee_id`,`employee_title`,`mobile_id`,`salary`. The data will be inserted into `Employee` table for future human resource management.
 - `layoff`: The admin can lay off a certain employee using provided `employee_id`. The data will be deleted from the `Employee` table for human resource management.
 
+# Advanced Query Usefulness
+- Our advanced query is used in these two functionalities: `check_revenue`,`check_feature`
+-  `check_revenue`: This will calculate and return the revenue in a specific month/year. With this information the admin will have useful information rather than a bunch of data. This application can be very helpful in the real world scenario.
+- `check_feature`: This will analyze popular features regarding specific price ranges. With this functionality, the admin can obtain information like what is the most popular feature among the room.Based on this information, the admin can distribute the quantity of the room for the best profit purpose, which is very useful in the real world situation. 
 # Achieved or Failed
-- ✅ The customer can book a room after successfully registering on our website.
-- ✅ The customer can make a request to the service they want during their stay.
-- ✅ The membership will be upgraded as the number of reservations of the customer increases.
-- ✅ The admin can see the revenue per month which is composed of every room that is booked and multiply its price from our system directly.
-- ✅ The admin can promote a price discount whenever they feel like it in our system.
-- ✅ The admin can directly hire a person, the id will be auto added into our database system to save the redundant paperwork.
-- ✅ The admin can layoff people with the provided employee id in our system
+- [x] The customer can book a room after successfully registering on our website.
+- [x] The customer can make a request to the service they want during their stay.
+- [x] The membership will be upgraded as the number of reservations of the customer increases.
+- [x] The admin can see the revenue per month which is composed of every room that is booked and multiply its price from our system directly.
+- [x] The admin can promote a price discount whenever they feel like it in our system.
+- [x] The admin can directly hire a person, the id will be auto added into our database system to save the redundant paperwork.
+- [x] The admin can layoff people with the provided employee id in our system
 - ❌ Fully functional membership mechanism
 - ❌ Customized membership base preference recommendation
 - ❌ Deal notification system
@@ -55,3 +59,4 @@ Overall, our team has good work distribution and a great team atmosphere. The co
 3. Implement fully functional "membership mechanism" for preference suggestion
 4. Combine with notification systems(SMS message, email)
 5. Combine with online payment system
+
