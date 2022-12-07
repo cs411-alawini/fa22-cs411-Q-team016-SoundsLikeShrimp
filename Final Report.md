@@ -51,9 +51,10 @@ Functionalities we newly added are listed below
 - ❌ Detailed Human Resource management system that support real-time resource prearrangement and optimized work distribution.
 # Technical Challenge 
 - cmlin2: This is my first time using node.js to develop a project. At First, I was confused by the different modules between CommonJS and ES modules. What's worse, my teammate and I chose the different module at the early stage, luckily after discussion we decided to go with CommonJS since it is more convenient for us to interact with SQL. During the merge/transform there are a lot of incompatible components that need to be resolved. The process is hard but the result is great.
-- 
+- chkuo2: 
 # Teamwork Distribution
 - cmlin2:Backend API(Node.js), Database internal operations (MySQL)
+- chkuo2:Frontend API(Javascript), stored procedure operations (MySQL)
 - 
 Overall, our team has good work distribution and a great team atmosphere. The communication is direct and clear, each member is assigned to the position that he is comfortable with. Most importantly, the TA,Naifu Zheng, is very supportive and provided a lot of useful advice that guides us to the right direction.
 # Future Work
