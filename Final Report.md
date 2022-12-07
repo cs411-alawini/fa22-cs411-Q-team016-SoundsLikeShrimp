@@ -1,3 +1,6 @@
+# Demo video link
+[demo video](https://drive.google.com/file/d/185XAUjTCsNknHx9IRd_T6ml3yJdUolZE/view?usp=sharing)
+
 # Difference from Original Proposal
 `The rudimentary users can only make reservations with the number of travelers and the time they stay.` After thorough consideration, we decided to drop this feature because this is not suitable to categorize customers and limit their options based on membership.
 As proposed, the user can unlock more features such as room preference selection, shuttle bus reservation and additional room services as their membership increases. We then decided to open our services to all customers.
