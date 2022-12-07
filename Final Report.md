@@ -51,11 +51,13 @@ Functionalities we newly added are listed below
 - ❌ Detailed Human Resource management system that support real-time resource prearrangement and optimized work distribution.
 # Technical Challenge 
 - cmlin2: This is my first time using node.js to develop a project. At First, I was confused by the different modules between CommonJS and ES modules. What's worse, my teammate and I chose the different module at the early stage, luckily after discussion we decided to go with CommonJS since it is more convenient for us to interact with SQL. During the merge/transform there are a lot of incompatible components that need to be resolved. The process is hard but the result is great.
-- chkuo2: Working on the frontend is very hard for me because this is the first time I used Javascript. I have no idea how this language works, as well as those libraries. Using React's effect hooks are very challenge to me as well. Thankfully, cfyang2 (Frank Yang) has taught me alot about frontend, and he did the majority of the frontend, while I support him debugging and give him ideas. I also worked on a little bit of backend (stored procedure), which I feel like more simple and straight forward.
+- chkuo2: Working on the frontend is very hard for me because this is the first time I used Javascript. I have no idea how this language works, as well as those libraries. Using React's effect hooks are very challenge to me as well. Thankfully, cfyang2 (Frank Yang) has taught me a lot about frontend, and he did the majority of the frontend, while I support him debugging and give him ideas. I also worked on a little bit of backend (stored procedure), which I feel like more simple and straight forward.
+- cfyang2: I'm appreciated that I have this opportunity to make plan of the whole project. I have few experiences in designing the application, which made us need to discuss the feasibility of the design many times during the development. It is hard to predict the possible difficulties in implementation at the design stage. Besides the design, we have little understanding in authentication, which forces us to keep fetching user information from the server. If we have sufficient knowledge in authentication, our application design would be more concise.
 # Teamwork Distribution
-- cmlin2:Backend API(Node.js), Database internal operations (MySQL)
-- chkuo2:Frontend API(Javascript), stored procedure operations (MySQL)
-- 
+- cmlin2:Backend API(Node.js), Database Internal Operations (MySQL)
+- chkuo2:Frontend API(JavaScript, React), Stored Procedure operations (MySQL)
+- cfyang2: Frontend API (JavaScript, React), Frontend Component Design, Database Design, Application Structure and Interface Design
+
 Overall, our team has good work distribution and a great team atmosphere. The communication is direct and clear, each member is assigned to the position that he is comfortable with. Most importantly, the TA,Naifu Zheng, is very supportive and provided a lot of useful advice that guides us to the right direction.
 # Future Work
 1. More sophisticated user interface
