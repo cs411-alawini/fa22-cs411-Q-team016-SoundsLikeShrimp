@@ -57,6 +57,7 @@ Functionalities we newly added are listed below
 - cmlin2:Backend API(Node.js), Database Internal Operations (MySQL)
 - chkuo2:Frontend API(JavaScript, React), Stored Procedure operations (MySQL)
 - cfyang2: Frontend API (JavaScript, React), Frontend Component Design, Database Design, Application Structure and Interface Design
+- vfchen2: Backend API(Node.js), Tigger Operations(MySQL), Dataset Generation
 
 Overall, our team has good work distribution and a great team atmosphere. The communication is direct and clear, each member is assigned to the position that he is comfortable with. Most importantly, the TA,Naifu Zheng, is very supportive and provided a lot of useful advice that guides us to the right direction.
 # Future Work
