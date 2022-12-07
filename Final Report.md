@@ -9,17 +9,20 @@ To sum up, we deprecated the feature of `membership` along with its recommendati
 Except for this, we've matched all the features from the proposal.
 
 # Usefulness evaluation 
-```
-Reservation management: In the reservation database, the admins are able to check the availability of each room according to different types of the rooms, and offer promotion via the membership.
-```
+
+## Reservation management: 
+In the reservation database, the admins are able to check the availability of each room according to different types of the rooms, and offer promotion via the membership.
+
 We've accomplished this application. The admin can easily check the revenue by clicking the `check revenue`.
-```
-Service management: The service database will provide all the service information that the hotel provided. The admin can easily schedule the human resources according to the time, and report the availability.
-```
+
+## Service management: 
+The service database will provide all the service information that the hotel provided. The admin can easily schedule the human resources according to the time, and report the availability.
+
 We partially accomplished this application. The customer can request a service during their stay. However, we failed to calculate how many human resources each service needs.  The admin still can list out how many services are requested per day and can allocate the human resource manually by checking our service table.
-```
-HR management: We integrate our management database with HR database to keep all interactions with employees under control. Among all the benefits are task management and time-scheduling. The manager of the hotel can assign tasks and track the completion of tasks in the system. In this way, it saves a lot of time for human resources distribution.
-```
+
+## HR management: 
+We integrate our management database with HR database to keep all interactions with employees under control. Among all the benefits are task management and time-scheduling. The manager of the hotel can assign tasks and track the completion of tasks in the system. In this way, it saves a lot of time for human resources distribution.
+
 # Alternation in Schema
 We change the data type of date in the `Reservation` table from `INT` to `DATE` so that we can calculate the available room from the user given check_in date and check_out date.
 
